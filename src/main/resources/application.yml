@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://61.99.10.111:5432/MERO_DB
+    username: postgres
+    password: tjdgns123..
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+
+jwt:
+  accessSecretKey: a5123sdafsdasd12315125d1afsadas5d12a3fasd1523asd1as32d13as1d5as1ds23
+  refreshSecretKey: sadkjgaklfsdcfk123125j124jl1i7n4gnh18od37n2o8d3ud81o3undo812nd8o1232
+
+su_pw: mero1234
