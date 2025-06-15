@@ -11,6 +11,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -18,33 +19,19 @@ public class CtaService {
 
     private final CtaRepository ctaRepository;
 
-    public void saveInquiryDetails(Map<String, Object> requestMap) { // String을 Date로 변환
+    public void saveInquiryDetails(Map<String, Object> requestMap) {// String을 Date로 변환
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Date rentalStartDate = new Date();
+        Date rentalEndDate = new Date();
 
         // 문자열을 LocalDate로 변환
-        String rentalStartDateStr = (String) requestMap.getOrDefault("rentalStartDate", "");
-        String rentalEndDateStr = (String) requestMap.getOrDefault("rentalEndDate", "");
-
-        LocalDate localRentalStartDate = null;
-        LocalDate localRentalEndDate = null;
-
-        if (!rentalStartDateStr.isEmpty()) {
-            localRentalStartDate = LocalDate.parse(rentalStartDateStr, formatter);
-        }
-        if (!rentalEndDateStr.isEmpty()) {
-            localRentalEndDate = LocalDate.parse(rentalEndDateStr, formatter);
-        }
+        LocalDate localRentalStartDate = LocalDate.parse(String.valueOf(requestMap.getOrDefault("rentalStartDate", "")), formatter);
+        LocalDate localRentalEndDate = LocalDate.parse(String.valueOf(requestMap.getOrDefault("rentalEndDate", "")), formatter);
 
         // LocalDate를 Date로 변환
-        Date rentalStartDate = localRentalStartDate != null
-                ? Date.from(localRentalStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
-                : null;
+        rentalStartDate = Date.from(localRentalStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        rentalEndDate = Date.from(localRentalEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        Date rentalEndDate = localRentalEndDate != null
-                ? Date.from(localRentalEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
-                : null;
-
-        // InquiryDetails 객체 생성 및 값 설정
         InquiryDetails inquiryDetails = new InquiryDetails();
         Long inquiryId = ctaRepository.findMaxInquiryId();
         inquiryDetails.setInquiryId(inquiryId);
@@ -55,7 +42,6 @@ public class CtaService {
         inquiryDetails.setAddress(String.valueOf(requestMap.get("address")));
         inquiryDetails.setInquiryDateTime(LocalDateTime.now());
 
-        // 저장
         ctaRepository.save(inquiryDetails);
     }
 }
