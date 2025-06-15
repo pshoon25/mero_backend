@@ -17,7 +17,7 @@ public class CtaController {
     private final CtaService ctaService;
 
     @PostMapping("/saveInquiryDetails")
-    public void insertInquiryDetails(@RequestBody Map<String, Objects> requestMap){
+    public void insertInquiryDetails(@RequestBody Map<String, Object> requestMap){
         ctaService.saveInquiryDetails(requestMap);
     }
 }
