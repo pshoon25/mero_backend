@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface CtaRepository extends JpaRepository<InquiryDetails, Long> {
-    @Query("SELECT MAX(a.inquiryId) FROM InquiryDetails a")
+    @Query("SELECT COALESCE(MAX(i.inquiryId), 0) FROM InquiryDetails i")
     Long findMaxInquiryId();
 }
