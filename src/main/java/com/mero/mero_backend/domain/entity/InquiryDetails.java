@@ -17,7 +17,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class InquiryDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INQUIRY_ID")
     private Long inquiryId;
 
