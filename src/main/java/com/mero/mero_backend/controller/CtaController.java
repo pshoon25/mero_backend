@@ -1,12 +1,11 @@
 package com.mero.mero_backend.controller;
 
+import com.mero.mero_backend.domain.entity.InquiryDetails;
 import com.mero.mero_backend.service.CtaService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,5 +18,10 @@ public class CtaController {
     @PostMapping("/saveInquiryDetails")
     public void insertInquiryDetails(@RequestBody Map<String, Object> requestMap){
         ctaService.saveInquiryDetails(requestMap);
+    }
+
+    @GetMapping("/getInquiryDetailsList")
+    public List<InquiryDetails> getInquiryDetailsList() {
+        return ctaService.getInquiryDetailsList();
     }
 }
