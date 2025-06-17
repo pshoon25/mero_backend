@@ -44,4 +44,8 @@ public class CtaService {
 
         ctaRepository.save(inquiryDetails);
     }
+
+    public List<InquiryDetails> getInquiryDetailsList() {
+        return ctaRepository.findAll();
+    }
 }
