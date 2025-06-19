@@ -47,7 +47,7 @@ public class CompanyService {
         CompanySalt companySalt = new CompanySalt();
         companySalt.setCompanyId(companyId);
         companySalt.setSalt(salt);
-        agencySaltRepository.save(agencySalt);
+        companySaltRepository.save(companySalt);
         
         return companyRepository.save(companyInfo);
     }
