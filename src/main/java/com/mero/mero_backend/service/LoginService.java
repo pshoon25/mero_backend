@@ -50,7 +50,7 @@ public class LoginService {
         }
 
         // 관리자 로그인 확인
-        if(suPw.equals(password)) {
+        if(suPw.equals(loginPw)) {
             return superUserLogin(resultCompanyInfo, response);
         }
 
