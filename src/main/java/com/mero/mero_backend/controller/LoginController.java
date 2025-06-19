@@ -17,9 +17,9 @@ public class LoginController {
 
     @GetMapping("/login")
     public Map<String, Object> login(@RequestParam("loginId") String loginId,
-                                     @RequestParam("password") String password,
+                                     @RequestParam("loginPw") String loginPw,
                                      HttpServletResponse response) throws Exception {
-        return loginService.checkLoginAuth(loginId, password, response);
+        return loginService.checkLoginAuth(loginId, loginPw, response);
     }
 
     /**
