@@ -15,6 +15,11 @@ import java.util.List;
 public class CompanyController {
     private final CompanyService companyInfoService;
 
+    @GetMapping("/checkLoginIdDuplicate")
+    public int checkLoginId(@RequestParam("loginId") String loginId) {
+        return companyInfoService.checkLoginIdDuplicate(loginId);
+    }
+
     @PostMapping("/insertCompanyInfo")
     public ResponseEntity<CompanyInfo> insertCompanyInfo(@RequestBody CompanyInfo companyInfo) {
         CompanyInfo createdCompanyInfo = companyInfoService.insertCompanyInfo(companyInfo);
