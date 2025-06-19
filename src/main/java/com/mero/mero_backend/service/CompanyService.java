@@ -34,7 +34,7 @@ public class CompanyService {
     public CompanyInfo insertCompanyInfo(CompanyInfo companyInfo) {
         // 비밀번호 암호화
         String salt = encrypt.getSalt();
-        String encodedPw = encrypt.getEncrypt(String.valueOf(companyInfo.get("loginPw")), salt);
+        String encodedPw = encrypt.getEncrypt(String.valueOf(companyInfo.getLoginPw()), salt);
 
         // 고유 ID를 설정 (예: YYYYMMdd + 2자리 ID 생성 로직)
         String companyId = generateCompanyInfoId();
