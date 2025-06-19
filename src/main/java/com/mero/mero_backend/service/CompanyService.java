@@ -2,6 +2,7 @@ package com.mero.mero_backend.service;
 
 import com.mero.mero_backend.converter.Encrypt;
 import com.mero.mero_backend.domain.entity.CompanyInfo;
+import com.mero.mero_backend.domain.entity.CompanySalt;
 import com.mero.mero_backend.repository.CompanyRepository;
 import com.mero.mero_backend.repository.CompanySaltRepository;
 
