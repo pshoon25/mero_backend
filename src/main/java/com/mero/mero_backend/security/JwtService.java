@@ -28,20 +28,20 @@ public class JwtService {
     @Value("${jwt.refreshSecretKey}")
     private String refreshSecretKey;
 
-    public String createAccessToken(String agencyCode) {
+    public String createAccessToken(String companyId) {
         byte[] keyBytes = Decoders.BASE64.decode(accessSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam("type", "jwt")
-                .claim("agencyCode", agencyCode)
+                .claim("companyId", companyId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 5)))  // 액세스 토큰의 만료 기간을 5분으로 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public void createRefreshToken(String agencyCode, HttpServletResponse response) {
+    public void createRefreshToken(String companyId, HttpServletResponse response) {
         byte[] keyBytes = Decoders.BASE64.decode(refreshSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
         Date now = new Date();
@@ -49,7 +49,7 @@ public class JwtService {
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setHeaderParam("type", "jwt")
-                .claim("agencyCode", agencyCode)
+                .claim("companyId", companyId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24))) // 만료기간은 1일로 설정
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -121,7 +121,7 @@ public class JwtService {
                 Claims claims = jwtParser.parseClaimsJws(refreshToken).getBody();
                 Date expiration = claims.getExpiration();
                 if (expiration != null && !expiration.before(new Date())) {
-                    result.put("accessToken", createAccessToken(String.valueOf(claims.get("agencyCode"))));
+                    result.put("accessToken", createAccessToken(String.valueOf(claims.get("companyId"))));
                     return result;
                 }
             } else {
