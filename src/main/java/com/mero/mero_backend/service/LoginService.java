@@ -32,7 +32,7 @@ public class LoginService {
      * @return
      * @throws java.lang.Exception
      */
-    public Map<String, Object> checkLoginAuth(String loginId, String password, HttpServletResponse response) throws Exception {
+    public Map<String, Object> checkLoginAuth(String loginId, String loginPw, HttpServletResponse response) throws Exception {
 
         Map<String, Object> result = new HashMap<>();
 
@@ -54,7 +54,7 @@ public class LoginService {
             return superUserLogin(resultCompanyInfo, response);
         }
 
-        // AGENCY_CODE로 SALT 조회
+        // COMPANY_ID 로 SALT 조회
         CompanySalt companySalt = companySaltRepository.findByCompanyId(resultCompanyInfo.getCompanyId());
 
         if (companySalt == null) {
@@ -64,7 +64,7 @@ public class LoginService {
 
         // 비밀번호 암호화
         String salt = companySalt.getSalt();
-        String encodedPw = encrypt.getEncrypt(password, salt);
+        String encodedPw = encrypt.getEncrypt(loginPw, salt);
 
         // 매칭
         if(resultCompanyInfo.getLoginPw().equals(encodedPw)) {
