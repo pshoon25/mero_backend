@@ -36,7 +36,7 @@ public class WebConfig {
                 System.out.println("Incoming request Origin: " + originHeader);
                 System.out.println("Request Method: " + httpRequest.getMethod());
 
-                // rs-nova.co.kr이 포함된 Origin을 모두 허용
+                // p95.co.kr이 포함된 Origin을 모두 허용
                 if (originHeader != null && originHeader.contains("p95.co.kr")) {
                     httpResponse.setHeader("Access-Control-Allow-Origin", originHeader);
                     httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
