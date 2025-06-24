@@ -2,7 +2,6 @@ package com.mero.mero_backend.config;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -37,12 +36,13 @@ public class WebConfig {
                 System.out.println("Request Method: " + httpRequest.getMethod());
 
                 // p95.co.kr이 포함된 Origin을 모두 허용
-                if (originHeader != null && originHeader.contains("p95.co.kr")) {
-                    httpResponse.setHeader("Access-Control-Allow-Origin", originHeader);
+                // if (originHeader != null && originHeader.contains("p95.co.kr")) {
+                    // httpResponse.setHeader("Access-Control-Allow-Origin", originHeader);
+                    httpResponse.setHeader("Access-Control-Allow-Origin", "*"); // 모든 출처 허용
                     httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
                     httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
                     httpResponse.setHeader("Access-Control-Allow-Headers", "*");
-                }
+                // }
 
                 chain.doFilter(request, response);
             }
@@ -55,7 +55,8 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://www.p95.co.kr", "https://www.p95.co.kr")
+                        .allowedOrigins("*")
+                        //.allowedOrigins("http://localhost:3000", "http://www.p95.co.kr", "https://www.p95.co.kr")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
                         .allowCredentials(true)
@@ -67,7 +68,8 @@ public class WebConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.p95.kr", "https://www.p95.co.kr"));
+        corsConfiguration.setAllowedOrigins(List.of("*")); // 모든 출처 허용
+        // corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.p95.kr", "https://www.p95.co.kr"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setMaxAge(3600L);
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH"));
