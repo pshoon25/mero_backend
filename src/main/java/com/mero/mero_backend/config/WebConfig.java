@@ -55,7 +55,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*")
+                        .allowedOriginPatterns("*") // 모든 출처를 허용
                         //.allowedOrigins("http://localhost:3000", "http://www.p95.co.kr", "https://www.p95.co.kr")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
@@ -68,7 +68,7 @@ public class WebConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("*")); // 모든 출처 허용
+        corsConfiguration.addAllowedOriginPattern("*"); // 모든 출처를 허용
         // corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.p95.kr", "https://www.p95.co.kr"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setMaxAge(3600L);
