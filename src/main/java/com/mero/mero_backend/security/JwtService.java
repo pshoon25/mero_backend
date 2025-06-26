@@ -107,6 +107,10 @@ public class JwtService {
                 JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(keyBytes)).build();
                 Claims claims = jwtParser.parseClaimsJws(accessToken).getBody();
                 Date expiration = claims.getExpiration();
+
+                 System.out.println("expiration : " + expiration);
+                 System.out.println("현재 시간 : " + new Date());
+                
                 return expiration != null && !expiration.before(new Date());
             }
             return false;
