@@ -32,9 +32,6 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(accessSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
         Date now = new Date();
-
-        System.out.println("현재 시간 : " + now);
-        
         return Jwts.builder()
                 .setHeaderParam("type", "jwt")
                 .claim("companyId", companyId)
@@ -92,7 +89,9 @@ public class JwtService {
         String accessToken = getAccessToken();
         String refreshToken = getRefreshToken();
         Map<String, String> result = new HashMap<>();
-        
+
+        System.out.println("AccessToken : " + accessToken);
+        System.out.println("RefreshToken : " + refreshToken);
         System.out.println("AccessToken 검증 : " + isValidAccessToken(accessToken));
         System.out.println("RefreshToken 검증 : " + isValidRefreshToken(refreshToken));
         
