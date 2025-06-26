@@ -32,6 +32,9 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(accessSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
         Date now = new Date();
+
+        System.out.println("현재 시간 : " + now);
+        
         return Jwts.builder()
                 .setHeaderParam("type", "jwt")
                 .claim("companyId", companyId)
