@@ -54,13 +54,13 @@ public class JwtService {
                 .setHeaderParam("type", "jwt")
                 .claim("companyId", companyId)
                 .setIssuedAt(now)
-                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24))) // 만료기간은 1일로 설정
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 3))) // 만료기간은 3일로 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // 쿠키 설정 및 response에 추가
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                .maxAge(1000 * 60 * 60 * 24)  // 쿠키 만료일을 1일로 설정
+                .maxAge(1000 * 60 * 60 * 24 * 3)  // 쿠키 만료일을 3일로 설정
                 .sameSite("None")                           // SameSite 속성 설정 (크로스 사이트 요청에서 쿠키를 포함시키기 위해 None으로 설정)
                 .secure(true)                               // HTTPS에서만 전송
                 .path("/")                                  // 쿠키의 유효 경로 설정 ("/"로 설정하여 전체 도메인에서 유효하게 만듦)
