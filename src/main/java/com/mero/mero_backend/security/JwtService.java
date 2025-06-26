@@ -92,6 +92,10 @@ public class JwtService {
         String accessToken = getAccessToken();
         String refreshToken = getRefreshToken();
         Map<String, String> result = new HashMap<>();
+        
+        System.out.println("AccessToken 검증 : " + isValidAccessToken(accessToken));
+        System.out.println("RefreshToken 검증 : " + isValidRefreshToken(refreshToken));
+        
         if (!isValidAccessToken(accessToken)) {
             return isValidRefreshToken(refreshToken);
         } else {
@@ -107,10 +111,6 @@ public class JwtService {
                 JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(keyBytes)).build();
                 Claims claims = jwtParser.parseClaimsJws(accessToken).getBody();
                 Date expiration = claims.getExpiration();
-
-                 System.out.println("expiration : " + expiration);
-                 System.out.println("현재 시간 : " + new Date());
-                
                 return expiration != null && !expiration.before(new Date());
             }
             return false;
