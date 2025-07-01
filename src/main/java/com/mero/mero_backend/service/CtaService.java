@@ -41,6 +41,7 @@ public class CtaService {
         inquiryDetails.setRentalStartDate(rentalStartDate);
         inquiryDetails.setRentalEndDate(rentalEndDate);
         inquiryDetails.setAddress(String.valueOf(requestMap.get("address")));
+        inquiryDetails.setAddress(String.valueOf(requestMap.get("intendedUse")));
         inquiryDetails.setInquiryDateTime(LocalDateTime.now());
 
         ctaRepository.save(inquiryDetails);
