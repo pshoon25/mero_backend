@@ -10,6 +10,14 @@ spring:
       hibernate:
         show-sql: true
         format_sql: true
+  web:
+    resources:
+      static-locations: file:/homepage/mero/designImage/
+#      static-locations: file:/Users/parksunghun/Desktop/Mero/designImage/ #로컬일 경우
+
+file:
+  upload-dir: /homepage/mero/designImage/
+#  upload-dir: /Users/parksunghun/Desktop/Mero/designImage/
 
 jwt:
   accessSecretKey: a5123sdafsdasd12315125d1afsadas5d12a3fasd1523asd1as32d13as1d5as1ds23
