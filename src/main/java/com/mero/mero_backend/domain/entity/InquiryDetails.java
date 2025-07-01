@@ -35,6 +35,9 @@ public class InquiryDetails {
     @Column(name = "ADDRESS")
     private String address;
 
+    @Column(name = "INTENDED_USE")
+    private String intendedUse;
+
     @Column(name = "INQUIRY_DATE_TIME", insertable = false, updatable = false)
     private LocalDateTime inquiryDateTime;
 }
