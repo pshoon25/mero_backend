@@ -1,5 +1,6 @@
 package com.mero.mero_backend.controller;
 
+import com.mero.mero_backend.domain.dto.DesignManagementDto;
 import com.mero.mero_backend.domain.entity.DesignManagement;
 import com.mero.mero_backend.service.DesignService;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +66,7 @@ public class DesignController {
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("data", backgroundImage);
+            response.put("data", backgroundImage == null ? null : new DesignManagementDto(backgroundImage));
 
             return ResponseEntity.ok(response);
 
