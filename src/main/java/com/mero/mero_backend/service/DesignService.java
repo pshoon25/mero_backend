@@ -18,7 +18,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermissions;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -96,8 +98,8 @@ public class DesignService {
             throw new IllegalArgumentException((String) validation.get("message"));
         }
 
-        String designId = UUID.randomUUID().toString();
-        String filename = designId + getFileExtension(file.getOriginalFilename());
+        String uuid = UUID.randomUUID().toString();
+        String filename = uuid + getFileExtension(file.getOriginalFilename());
         Path filePath = Paths.get(UPLOAD_DIR, filename);
 
         // Save file
@@ -107,6 +109,8 @@ public class DesignService {
 
         // Get image dimensions
         BufferedImage image = ImageIO.read(file.getInputStream());
+
+        String designId = generateDesignId();
 
         // Create and save entity
         DesignManagement designManagement = new DesignManagement();
@@ -185,5 +189,12 @@ public class DesignService {
         if (filename == null) return ".jpg";
         int lastIndex = filename.lastIndexOf('.');
         return lastIndex == -1 ? ".jpg" : filename.substring(lastIndex);
+    }
+
+    public String generateDesignId() {
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int maxId = designRepository.findMaxIdByDate(today);
+        String formattedId = String.format("%02d", maxId + 1);
+        return today + formattedId;
     }
 }
