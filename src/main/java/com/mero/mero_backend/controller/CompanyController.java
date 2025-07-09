@@ -33,6 +33,6 @@ public class CompanyController {
 
     @GetMapping("/getCompanyInfo")
     public CompanyInfo getCompanyInfo(@RequestBody String companyId) {
-        return companyInfoService.getCompanyInfo(companyId)
+        return companyInfoService.getCompanyInfo(companyId);
     }
 }
