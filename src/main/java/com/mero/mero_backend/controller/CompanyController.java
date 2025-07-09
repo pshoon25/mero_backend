@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
-
 public class CompanyController {
     private final CompanyService companyInfoService;
 
