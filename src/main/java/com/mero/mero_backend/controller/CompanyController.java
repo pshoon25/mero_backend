@@ -31,4 +31,8 @@ public class CompanyController {
         return companyInfoService.getCompanyListInfo();
     }
 
+    @GetMapping("/getCompanyInfo")
+    public CompanyInfo getCompanyInfo(@RequestBody String companyId) {
+        return companyInfoService.getCompanyInfo(companyId)
+    }
 }
