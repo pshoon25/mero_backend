@@ -32,7 +32,7 @@ public class CompanyController {
     }
 
     @GetMapping("/getCompanyInfo")
-    public CompanyInfo getCompanyInfo(@RequestBody String companyId) {
+    public CompanyInfo getCompanyInfo(@RequestParam("companyId") String companyId) {
         return companyInfoService.getCompanyInfo(companyId);
     }
 }
