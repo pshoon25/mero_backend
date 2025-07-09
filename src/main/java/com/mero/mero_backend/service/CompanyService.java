@@ -57,6 +57,10 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
+    public CompanyInfo getCompanyInfo(String companyId) {
+        return companyRepository.findByCompanyId(companyId);
+    }
+
     public String generateCompanyInfoId() {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int maxId = companyRepository.findMaxIdByDate(today);
