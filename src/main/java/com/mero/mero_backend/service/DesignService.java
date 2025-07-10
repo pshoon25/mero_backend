@@ -138,7 +138,7 @@ public class DesignService {
     public Resource getImageFile(String designId) {
         try {
             DesignManagement design = designRepository.findById(Long.parseLong(designId)).orElseThrow(() -> new RuntimeException("Design not found"));
-            Path filePath = Paths.get(UPLOAD_DIR).resolve(design.getFileName());
+            Path filePath = Paths.get(UPLOAD_DIR, design.getCompanyId(), design.getApplicationType().toLowerCase(), design.getFileName());
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
                 return resource;
