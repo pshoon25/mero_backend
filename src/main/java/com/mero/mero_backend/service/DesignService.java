@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.lang.Nullable;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -71,41 +72,38 @@ public class DesignService {
             return validation;
         }
 
-        // Check image dimensions
-        try {
-            BufferedImage image = ImageIO.read(file.getInputStream());
-            int width = image.getWidth();
-            int height = image.getHeight();
-            if (width != 1340 || height != 800) {
-                validation.put("valid", false);
-                validation.put("message", "Image dimensions must be 1340x800 pixels");
-                return validation;
-            }
-        } catch (IOException e) {
-            validation.put("valid", false);
-            validation.put("message", "Failed to read image dimensions");
-            return validation;
-        }
-
         validation.put("valid", true);
         return validation;
     }
 
-    public DesignManagement uploadBackgroundImage(MultipartFile file, String companyId) throws IOException {
+    public DesignManagement uploadImage(MultipartFile file, String companyId, String applicationType,  @Nullable String frameMngId) throws IOException {
         // Validate file
         Map<String, Object> validation = validateImageFile(file);
         if (!(Boolean) validation.get("valid")) {
             throw new IllegalArgumentException((String) validation.get("message"));
         }
 
-        String uuid = UUID.randomUUID().toString();
-        String filename = uuid + getFileExtension(file.getOriginalFilename());
-        Path filePath = Paths.get(UPLOAD_DIR, filename);
+        // Path 설정
+        Path companyDirPath = Paths.get(UPLOAD_BASE_DIR, companyId);
+        Path targetDirPath = Paths.get(companyDirPath.toString(), applicationType.toLowerCase());
 
-        // Save file
+        // 폴더가 없으면 생성 및 권한 설정
+        if (!Files.exists(targetDirPath)) {
+            Files.createDirectories(targetDirPath);
+            log.info("Created directory: {}", targetDirPath);
+            Set<java.nio.file.attribute.PosixFilePermission> dirPerms = PosixFilePermissions.fromString("rwxr-xr-x");
+            Files.setPosixFilePermissions(targetDirPath, dirPerms);
+        }
+
+        String uuid = UUID.randomUUID().toString();
+        String originalFilename = Objects.requireNonNull(file.getOriginalFilename());
+        String filename = uuid + getFileExtension(originalFilename);
+        Path filePath = targetDirPath.resolve(filename);
+
+        // 파일 저장 및 권한 설정
         Files.write(filePath, file.getBytes());
-        // Set file permissions to 644 (rw-r--r--)
-        Files.setPosixFilePermissions(filePath, PosixFilePermissions.fromString("rw-r--r--"));
+        Set<java.nio.file.attribute.PosixFilePermission> filePerms = PosixFilePermissions.fromString("rw-r--r--");
+        Files.setPosixFilePermissions(filePath, filePerms);
 
         // Get image dimensions
         BufferedImage image = ImageIO.read(file.getInputStream());
@@ -115,13 +113,14 @@ public class DesignService {
         // Create and save entity
         DesignManagement designManagement = new DesignManagement();
         designManagement.setDesignId(designId);
-        designManagement.setDesignImageUrl("/design/background/file/" + designId);
+        designManagement.setDesignImageUrl(applicationType.toLowerCase() + designId);
         designManagement.setCompanyId(companyId);
         designManagement.setFileName(filename);
         designManagement.setFileSize(file.getSize());
         designManagement.setImageWidth(image.getWidth());
         designManagement.setImageHeight(image.getHeight());
-        designManagement.setApplicationType("BACKGROUND");
+        designManagement.setApplicationType(applicationType.toUpperCase());
+        designManagement.setFrameMngId(applicationType.toUpperCase() == "FRAME_DESIGN" ? frameMngId : null);
         designManagement.setUploadDate(LocalDateTime.now());
 
         designRepository.save(designManagement);
