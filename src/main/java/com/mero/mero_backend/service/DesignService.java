@@ -18,13 +18,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -84,14 +83,14 @@ public class DesignService {
         }
 
         // Path 설정
-        Path companyDirPath = Paths.get(UPLOAD_BASE_DIR, companyId);
+        Path companyDirPath = Paths.get(UPLOAD_DIR, companyId);
         Path targetDirPath = Paths.get(companyDirPath.toString(), applicationType.toLowerCase());
 
         // 폴더가 없으면 생성 및 권한 설정
         if (!Files.exists(targetDirPath)) {
             Files.createDirectories(targetDirPath);
             log.info("Created directory: {}", targetDirPath);
-            Set<java.nio.file.attribute.PosixFilePermission> dirPerms = PosixFilePermissions.fromString("rwxr-xr-x");
+            Set<PosixFilePermission> dirPerms = PosixFilePermissions.fromString("rwxr-xr-x");
             Files.setPosixFilePermissions(targetDirPath, dirPerms);
         }
 
@@ -120,7 +119,7 @@ public class DesignService {
         designManagement.setImageWidth(image.getWidth());
         designManagement.setImageHeight(image.getHeight());
         designManagement.setApplicationType(applicationType.toUpperCase());
-        designManagement.setFrameMngId(applicationType.toUpperCase() == "FRAME_DESIGN" ? frameMngId : null);
+        designManagement.setFrameMngId("FRAME_DESIGN".equals(String.valueOf(applicationType.toUpperCase())) ? frameMngId : "");
         designManagement.setUploadDate(LocalDateTime.now());
 
         designRepository.save(designManagement);
@@ -128,31 +127,30 @@ public class DesignService {
         return designManagement;
     }
 
-    public DesignManagement getBackgroundImage(String companyId) {
-        return designRepository.findByCompanyIdAndApplicationType(companyId, "BACKGROUND")
-                .orElse(null);
+    public DesignManagement getImage(String companyId, String applicationType,  @Nullable String frameMngId) {
+        if ("FRAME_DESIGN".equals(String.valueOf(applicationType.toUpperCase()))) {
+            return designRepository.findByCompanyIdAndApplicationTypeAndFrameMngId(companyId, applicationType, frameMngId).orElse(null);
+        } else {
+            return designRepository.findByCompanyIdAndApplicationType(companyId, applicationType).orElse(null);
+        }
     }
 
-    public Resource getBackgroundImageFile(String designId) {
+    public Resource getImageFile(String designId) {
         try {
-            DesignManagement design = designRepository.findById(Long.parseLong(designId))
-                    .orElseThrow(() -> new RuntimeException("Design not found"));
-
+            DesignManagement design = designRepository.findById(Long.parseLong(designId)).orElseThrow(() -> new RuntimeException("Design not found"));
             Path filePath = Paths.get(UPLOAD_DIR).resolve(design.getFileName());
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
                 return resource;
             }
         } catch (Exception e) {
-            log.error("Error loading background image file", e);
+            log.error("Error loading image file", e);
         }
-
         throw new RuntimeException("File not found");
     }
 
-    public void deleteBackgroundImage(String designId) throws IOException {
-        DesignManagement design = designRepository.findById(Long.parseLong(designId))
-                .orElseThrow(() -> new RuntimeException("Design not found"));
+    public void deleteImage(String designId) throws IOException {
+        DesignManagement design = designRepository.findById(Long.parseLong(designId)).orElseThrow(() -> new RuntimeException("Design not found"));
 
         Path filePath = Paths.get(UPLOAD_DIR).resolve(design.getFileName());
         if (Files.exists(filePath)) {
@@ -163,16 +161,19 @@ public class DesignService {
         }
     }
 
-    public DesignManagement replaceBackgroundImage(MultipartFile file, String companyId) throws IOException {
+    public DesignManagement replaceImage(MultipartFile file, String companyId, String applicationType,  @Nullable String frameMngId) throws IOException {
         // Delete existing image for the company
-        DesignManagement existingDesign = designRepository.findByCompanyIdAndApplicationType(companyId, "BACKGROUND")
-                .orElse(null);
+        DesignManagement existingDesign = designRepository.findByCompanyIdAndApplicationType(companyId, applicationType).orElse(null);
         if (existingDesign != null) {
-            deleteBackgroundImage(existingDesign.getDesignId());
+            deleteImage(existingDesign.getDesignId());
         }
 
         // Upload new image
-        return uploadBackgroundImage(file, companyId);
+        if ("FRAME_DESIGN".equals(String.valueOf(applicationType.toUpperCase()))) {
+            return uploadImage(file, companyId, applicationType, frameMngId);
+        } else {
+            return uploadImage(file, companyId, applicationType, null);
+        }
     }
 
     private boolean isValidExtension(String filename) {

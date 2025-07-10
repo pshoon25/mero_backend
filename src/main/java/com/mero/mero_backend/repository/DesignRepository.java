@@ -12,4 +12,6 @@ public interface DesignRepository extends JpaRepository<DesignManagement, Long> 
     Integer findMaxIdByDate(@Param("date") String date);
 
     Optional<DesignManagement> findByCompanyIdAndApplicationType(String companyId, String applicationType);
+
+    Optional<DesignManagement> findByCompanyIdAndApplicationTypeAndFrameMngId(String companyId, String applicationType, String frameMngId);
 }
