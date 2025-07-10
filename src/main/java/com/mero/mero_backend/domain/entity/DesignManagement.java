@@ -25,6 +25,9 @@ public class DesignManagement {
     @Column(name = "APPLICATION_TYPE", nullable = false)
     private String applicationType;
 
+    @Column(name = "FRAME_MNG_ID")
+    private String frameMngId;
+    
     @Column(name = "DESIGN_IMAGE_URL", nullable = false)
     private String designImageUrl;
 
