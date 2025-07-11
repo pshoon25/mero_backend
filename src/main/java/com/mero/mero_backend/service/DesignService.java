@@ -83,12 +83,7 @@ public class DesignService {
         }
 
         // Path 설정
-        Path companyDirPath;
-        if ("FRAME".equals(applicationType)) {
-            companyDirPath= Paths.get(UPLOAD_DIR, "common");
-        } else {
-            companyDirPath= Paths.get(UPLOAD_DIR, companyId);
-        }
+        Path companyDirPath = Paths.get(UPLOAD_DIR, companyId);
         Path targetDirPath = Paths.get(companyDirPath.toString(), applicationType.toLowerCase());
 
         // 폴더가 없으면 생성 및 권한 설정
