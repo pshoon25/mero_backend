@@ -44,7 +44,7 @@ public class FrameService {
     }  
 
     public List<Frame> getFrames() {
-        return getAllFramesWithDesignInfo();
+        return frameRepository.getAllFramesWithDesignInfo();
     }
 
     public String generateFrameId() {
