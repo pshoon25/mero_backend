@@ -84,7 +84,7 @@ public class DesignService {
 
         // Path 설정
         Path companyDirPath;
-        if ("FRAME".equals(applicationType) {
+        if ("FRAME".equals(applicationType)) {
             companyDirPath= Paths.get(UPLOAD_DIR, "common");
         } else {
             companyDirPath= Paths.get(UPLOAD_DIR, companyId);
