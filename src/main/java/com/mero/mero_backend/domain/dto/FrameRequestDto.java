@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FrameRequest {
+public class FrameRequestDto {
     private String frameId;
     private String companyId;
     private String applicationType;
     private String frameName;
     private String useYn;
 
-    public FrameRequest(CompanyInfo companyInfo, DesignManagement designManagement, Frame frame) {
+    public FrameRequestDto(CompanyInfo companyInfo, DesignManagement designManagement, Frame frame) {
         this.frameId = frame.getFrameId();
         this.companyId = companyInfo.getCompanyId();
         this.applicationType = designManagement.getApplicationType();
