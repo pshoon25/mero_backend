@@ -1,6 +1,7 @@
 package com.mero.mero_backend.repository;
 
 import com.mero.mero_backend.domain.entity.Frame;
+import com.mero.mero_backend.domain.dto.FrameResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +13,5 @@ public interface FrameRepository extends JpaRepository<Frame, Long> {
     Integer findMaxIdByDate(@Param("date") String date);
 
     @Query("SELECT f FROM Frame f JOIN FETCH f.designManagement")
-    List<Frame> getAllFramesWithDesignInfo();
+    List<FrameResponseDto> getAllFramesWithDesignInfo();
 }
