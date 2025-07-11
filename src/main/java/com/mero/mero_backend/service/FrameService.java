@@ -3,6 +3,7 @@ package com.mero.mero_backend.service;
 import com.mero.mero_backend.repository.FrameRepository;
 import com.mero.mero_backend.service.DesignService;
 import com.mero.mero_backend.domain.entity.Frame;
+import com.mero.mero_backend.domain.dto.FrameRequest;
 import com.mero.mero_backend.domain.entity.DesignManagement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,15 @@ public class FrameService {
     private final DesignService designService;
 
     @Transactional
-    public Frame saveFrame(MultipartFile file, Map<String, Object> requestMap) {
-        String companyId = String.valueOf(requestMap.get("companyId"));
-        DesignManagement designManagement = designService.uploadImage(file, companyId, "FRAME", null);
+    public Frame saveFrame(MultipartFile file, FrameRequest frameRequest) {
+        DesignManagement designManagement = designService.uploadImage(file, frameRequest.getCompanyId, frameRequest.getApplicationType, null);
 
         Frame frame = new Frame();
         String frameId = generateFrameId();
         frame.setFrameId(frameId);
         frame.setDesignId(designManagement.getDesignId);
-        frame.setFrameName(String.valueOf(requsetMap.get("frameName")));
-        frame.setUseYn(String.valueOf(requsetMap.get("useYn")));
+        frame.setFrameName(frameRequest.getFrameName);
+        frame.setUseYn(frameRequest.getUseYn);
         return frameRepository.save(frame);
     }   
 
