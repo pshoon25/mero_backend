@@ -22,13 +22,17 @@ public class Frame {
     @Id
     @Column(name = "FRAME_ID")
     private String frameId;
+    
+    @Column(name = "DESIGN_ID", nullable = false)
+    private String designId;
 
     @Column(name = "FRAME_NAME", nullable = false)
     private String frameName;
 
-    @Column(name = "FRAME_IMG_URL", nullable = false)
-    private String frameImgUrl;
-
     @Column(name = "USE_YN", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'Y'")
     private String useYn;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DESIGN_ID", referencedColumnName = "DESIGN_ID", insertable = false, updatable = false)
+    private DesignManagement designManagement;
 }
