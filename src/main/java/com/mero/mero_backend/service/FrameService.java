@@ -18,7 +18,7 @@ public class FrameService {
     private final DesignService designService;
 
     @Transactional
-    public void saveFrame(MultipartFile file, Map<String, Object> requestMap) {
+    public Frame saveFrame(MultipartFile file, Map<String, Object> requestMap) {
         String companyId = String.valueOf(requestMap.get("companyId"));
         DesignManagement designManagement = designService.uploadImage(file, companyId, "FRAME", null);
 
@@ -28,7 +28,7 @@ public class FrameService {
         frame.setDesignId(designManagement.getDesignId);
         frame.setFrameName(String.valueOf(requsetMap.get("frameName")));
         frame.setUseYn(String.valueOf(requsetMap.get("useYn")));
-        frameRepository.save(frame);
+        return frameRepository.save(frame);
     }   
 
     public String generateFrameId() {
