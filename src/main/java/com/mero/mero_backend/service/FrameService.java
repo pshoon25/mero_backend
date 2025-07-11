@@ -40,7 +40,11 @@ public class FrameService {
         frame.setFrameName(frameRequest.getFrameName());
         frame.setUseYn(frameRequest.getUseYn());
         return frameRepository.save(frame);
-    }   
+    }  
+
+    public List<Frame> getFrames() {
+        return getAllFramesWithDesignInfo();
+    }
 
     public String generateFrameId() {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
