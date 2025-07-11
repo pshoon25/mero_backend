@@ -3,7 +3,8 @@ package com.mero.mero_backend.service;
 import com.mero.mero_backend.repository.FrameRepository;
 import com.mero.mero_backend.service.DesignService;
 import com.mero.mero_backend.domain.entity.Frame;
-import com.mero.mero_backend.domain.dto.FrameRequest;
+import com.mero.mero_backend.domain.dto.FrameRequestDto;
+import com.mero.mero_backend.domain.dto.FrameResponseDto;
 import com.mero.mero_backend.domain.entity.DesignManagement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +27,10 @@ public class FrameService {
     private final DesignService designService;
 
     @Transactional
-    public Frame saveFrame(MultipartFile file, FrameRequest frameRequest) {
+    public Frame saveFrame(MultipartFile file, FrameRequestDto frameRequestDto) {
         DesignManagement designManagement;
         try {
-            designManagement = designService.uploadImage(file, frameRequest.getCompanyId(), frameRequest.getApplicationType(), null);
+            designManagement = designService.uploadImage(file, frameRequestDto.getCompanyId(), frameRequestDto.getApplicationType(), null);
         } catch (IOException e) {
             throw new RuntimeException("프레임 이미지 업로드에 실패했습니다.", e);
         }
@@ -38,12 +39,12 @@ public class FrameService {
         String frameId = generateFrameId();
         frame.setFrameId(frameId);
         frame.setDesignId(designManagement.getDesignId());
-        frame.setFrameName(frameRequest.getFrameName());
-        frame.setUseYn(frameRequest.getUseYn());
+        frame.setFrameName(frameRequestDto.getFrameName());
+        frame.setUseYn(frameRequestDto.getUseYn());
         return frameRepository.save(frame);
     }  
 
-    public List<Frame> getFrames() {
+    public List<FrameResponseDto> getFrames() {
         return frameRepository.getAllFramesWithDesignInfo();
     }
 
