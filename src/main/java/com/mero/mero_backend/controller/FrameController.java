@@ -1,7 +1,8 @@
 package com.mero.mero_backend.controller;
 
 import com.mero.mero_backend.domain.entity.Frame;
-import com.mero.mero_backend.domain.dto.FrameRequest;
+import com.mero.mero_backend.domain.dto.FrameRequestDto;
+import com.mero.mero_backend.domain.dto.FrameResponseDto;
 import com.mero.mero_backend.service.FrameService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,9 +31,9 @@ public class FrameController {
     @PostMapping("/saveFrame")
     public ResponseEntity<Map<String, Object>> saveFrame(
             @RequestPart(value = "image", required = false) MultipartFile file,
-            @RequestPart("frameRequest") FrameRequest frameRequest) {
+            @RequestPart("frameRequestDto") FrameRequestDto frameRequestDto) {
         try {
-            Frame result = frameService.saveFrame(file, frameRequest);
+            Frame result = frameService.saveFrame(file, frameRequestDto);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "저장이 성공적으로 완료되었습니다.");
@@ -50,7 +51,7 @@ public class FrameController {
     @GetMapping("/getFrames")
     public ResponseEntity<Map<String, Object>> getFrames() {
         try {
-            List<Frame> frames = frameService.getFrames(); 
+            List<FrameResponseDto> frames = frameService.getFrames(); 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("data", frames);
