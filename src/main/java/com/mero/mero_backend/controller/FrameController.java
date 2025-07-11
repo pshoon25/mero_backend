@@ -21,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/frame")
 @RequiredArgsConstructor
 @Slf4j
-public class DesignController {
+public class FrameController {
 
     private final FrameService frameService;
 
