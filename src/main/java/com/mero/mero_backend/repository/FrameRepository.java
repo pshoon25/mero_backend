@@ -12,5 +12,5 @@ public interface FrameRepository extends JpaRepository<Frame, Long> {
     Integer findMaxIdByDate(@Param("date") String date);
 
     @Query("SELECT f FROM Frame f JOIN FETCH f.designManagement")
-    List<Frame> findAllWithDesignManagement();
+    List<Frame> getAllFramesWithDesignInfo();
 }
