@@ -30,7 +30,6 @@ public class FrameService {
         try {
             designManagement = designService.uploadImage(file, frameRequest.getCompanyId(), frameRequest.getApplicationType(), null);
         } catch (IOException e) {
-            log.error("Failed to upload image for frame: {}", e.getMessage());
             throw new RuntimeException("프레임 이미지 업로드에 실패했습니다.", e);
         }
 
