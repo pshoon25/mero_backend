@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.time.LocalDate;
@@ -23,7 +24,13 @@ public class FrameService {
 
     @Transactional
     public Frame saveFrame(MultipartFile file, FrameRequest frameRequest) {
-        DesignManagement designManagement = designService.uploadImage(file, frameRequest.getCompanyId(), frameRequest.getApplicationType(), null);
+        DesignManagement designManagement;
+        try {
+            designManagement = designService.uploadImage(file, frameRequest.getCompanyId(), frameRequest.getApplicationType(), null);
+        } catch (IOException e) {
+            log.error("Failed to upload image for frame: {}", e.getMessage());
+            throw new RuntimeException("프레임 이미지 업로드에 실패했습니다.", e);
+        }
 
         Frame frame = new Frame();
         String frameId = generateFrameId();
