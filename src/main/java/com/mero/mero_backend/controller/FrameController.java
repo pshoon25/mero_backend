@@ -30,7 +30,7 @@ public class DesignController {
             @RequestPart("image") MultipartFile file,
             @RequestPart("frameRequest") FrameRequest frameRequest) {
         try {
-            Frame result = frameService.saveFrame(file, FrameRequest);
+            Frame result = frameService.saveFrame(file, frameRequest);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "저장이 성공적으로 완료되었습니다.");
