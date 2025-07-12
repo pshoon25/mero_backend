@@ -3,7 +3,6 @@ package com.mero.mero_backend.domain.dto;
 import com.mero.mero_backend.domain.entity.CompanyInfo;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.entity.DesignManagement;
-
 import com.mero.mero_backend.domain.entity.FrameManagement;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +18,20 @@ public class FrameDesignResponseDto {
     private String designId;
     private String companyId;
 
-    public FrameDesignResponseDto(Frame frame, FrameManagement frameManagement, DesignManagement designManagement, CompanyInfo companyInfo) {
-        this.frameMngId = frameManagement.getFrameMngId();
-        this.frameId = frame.getFrameId();
-        this.useYn = frameManagement.getUseYn();
-        this.designId = designManagement.getDesignId();
-        this.companyId = companyInfo.getCompanyId();
+    // FrameManagement 객체 하나를 인자로 받는 생성자
+    public FrameDesignResponseDto(FrameManagement fm) {
+        this.frameMngId = fm.getFrameMngId();
+        this.useYn = fm.getUseYn();
+
+        if (fm.getFrame() != null) {
+            this.frameId = fm.getFrame().getFrameId();
+            if (fm.getFrame().getDesignManagement() != null) {
+                this.designId = fm.getFrame().getDesignManagement().getDesignId();
+            }
+        }
+
+        if (fm.getCompanyInfo() != null) {
+            this.companyId = fm.getCompanyInfo().getCompanyId();
+        }
     }
 }
