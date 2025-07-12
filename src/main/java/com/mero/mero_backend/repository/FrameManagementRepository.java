@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FrameManagementRepository extends JpaRepository<FrameManagement, String> {
 
-    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameResponseDto(fm) " +
+    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignResponseDto(fm) " +
             "FROM FrameManagement fm " +
             "JOIN FETCH fm.companyInfo ci " +
             "JOIN FETCH fm.frame f " +
