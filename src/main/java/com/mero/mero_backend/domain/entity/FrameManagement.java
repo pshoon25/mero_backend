@@ -30,7 +30,7 @@ public class FrameManagement {
     @JoinColumn(name = "COMPANY_ID", referencedColumnName = "COMPANY_ID", insertable = false, updatable = false)
     private CompanyInfo companyInfo;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FRAME_ID", referencedColumnName = "FRAME_ID", insertable = false, updatable = false)
     private Frame frame;
 }

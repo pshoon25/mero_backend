@@ -1,5 +1,6 @@
 package com.mero.mero_backend.controller;
 
+import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
@@ -62,6 +63,25 @@ public class FrameController {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "프레임 목록을 불러오는데 실패했습니다: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/getFrameDesigns")
+    public ResponseEntity<Map<String, Object>> getFrameDesigns(@RequestParam("designId") String designId,
+                                                               @RequestParam("companyId") String companyId) {
+        try {
+            List<FrameDesignResponseDto> frames = frameService.getFrameDesigns(designId, companyId);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", frames);
+            response.put("message", "프레임 목록을 성공적으로 불러왔습니다.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("프레임 디자인 불러오기 실패: {}", e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "프레임 디자인을 불러오는데 실패했습니다: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

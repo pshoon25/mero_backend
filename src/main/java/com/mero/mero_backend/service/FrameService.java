@@ -1,7 +1,8 @@
 package com.mero.mero_backend.service;
 
+import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
+import com.mero.mero_backend.repository.FrameManagementRepository;
 import com.mero.mero_backend.repository.FrameRepository;
-import com.mero.mero_backend.service.DesignService;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
@@ -13,17 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.Objects;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class FrameService {
     private final FrameRepository frameRepository;
+    private final FrameManagementRepository frameManagementRepository;
     private final DesignService designService;
 
     @Transactional
@@ -46,6 +47,10 @@ public class FrameService {
 
     public List<FrameResponseDto> getFrames() {
         return frameRepository.getAllFramesWithDesignInfo();
+    }
+
+    public List<FrameDesignResponseDto> getFrameDesigns(String designId, String companyId) {
+        return frameManagementRepository.findByDesignIdAndCompanyId(designId, companyId);
     }
 
     public String generateFrameId() {
