@@ -18,7 +18,6 @@ public class FrameDesignResponseDto {
     private String designId;
     private String companyId;
 
-    // FrameManagement 객체 하나를 인자로 받는 생성자
     public FrameDesignResponseDto(FrameManagement fm) {
         this.frameMngId = fm.getFrameMngId();
         this.useYn = fm.getUseYn();

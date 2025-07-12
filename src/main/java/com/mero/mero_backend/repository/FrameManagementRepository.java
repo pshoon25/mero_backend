@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface FrameManagementRepository extends JpaRepository<FrameManagement, String> {
-    @Query("SELECT COALESCE(CAST(MAX(CAST(SUBSTRING(fm.frameMngId, 9, 2) AS INTEGER)) AS INTEGER), 0) FROM FrameManagement fm WHERE SUBSTRING(f.frameId, 1, 8) = :date")
+    @Query("SELECT COALESCE(CAST(MAX(CAST(SUBSTRING(fm.frameMngId, 9, 2) AS INTEGER)) AS INTEGER), 0) FROM FrameManagement fm WHERE SUBSTRING(fm.frame.frameId, 1, 8) = :date")
     Integer findMaxIdByDate(@Param("date") String date);
 
     @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignResponseDto(fm) " +
