@@ -1,9 +1,11 @@
 package com.mero.mero_backend.controller;
 
+import com.mero.mero_backend.domain.dto.FrameDesignRequestDto;
 import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
+import com.mero.mero_backend.domain.entity.FrameManagement;
 import com.mero.mero_backend.service.FrameService;
 
 import lombok.RequiredArgsConstructor;
@@ -68,10 +70,10 @@ public class FrameController {
     }
 
     @GetMapping("/getFrameDesigns")
-    public ResponseEntity<Map<String, Object>> getFrameDesigns(@RequestParam("designId") String designId,
+    public ResponseEntity<Map<String, Object>> getFrameDesigns(@RequestParam("frameId") String frameId,
                                                                @RequestParam("companyId") String companyId) {
         try {
-            List<FrameDesignResponseDto> frames = frameService.getFrameDesigns(designId, companyId);
+            List<FrameDesignResponseDto> frames = frameService.getFrameDesigns(frameId, companyId);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("data", frames);
@@ -83,6 +85,26 @@ public class FrameController {
             response.put("success", false);
             response.put("message", "프레임 디자인을 불러오는데 실패했습니다: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @PostMapping("/saveFrameDesign")
+    public ResponseEntity<Map<String, Object>> saveFrameDesign(
+            @RequestPart(value = "image", required = false) MultipartFile file,
+            @RequestPart("frameDesignRequestDto") FrameDesignRequestDto frameDesignRequestDto) {
+        try {
+            FrameManagement result = frameService.saveFrameDesign(file, frameDesignRequestDto);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "저장이 성공적으로 완료되었습니다.");
+            response.put("data", result);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("저장 실패", e);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "저장에 실패했습니다: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
 }
