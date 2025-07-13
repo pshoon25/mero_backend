@@ -43,6 +43,7 @@ public class CompanyService {
         companyInfo.setCompanyType("USER");
         companyInfo.setUseYn("Y");
         companyInfo.setRegisterDateTime(LocalDate.now());
+        CompanyInfo result = companyRepository.save(companyInfo);
         
         // salt 정보 저장
         CompanySalt companySalt = new CompanySalt();
@@ -50,7 +51,7 @@ public class CompanyService {
         companySalt.setSalt(salt);
         companySaltRepository.save(companySalt);
         
-        return companyRepository.save(companyInfo);
+        return result;
     }
 
     public List<CompanyInfo> getCompanyListInfo() {
