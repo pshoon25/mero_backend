@@ -14,23 +14,15 @@ import lombok.NoArgsConstructor;
 public class FrameDesignResponseDto {
     private String frameMngId;
     private String frameId;
+    private String companyId;
     private String useYn;
     private String designId;
-    private String companyId;
 
-    public FrameDesignResponseDto(FrameManagement fm) {
-        this.frameMngId = fm.getFrameMngId();
-        this.useYn = fm.getUseYn();
-
-        if (fm.getFrame() != null) {
-            this.frameId = fm.getFrame().getFrameId();
-            if (fm.getFrame().getDesignManagement() != null) {
-                this.designId = fm.getFrame().getDesignManagement().getDesignId();
-            }
-        }
-
-        if (fm.getCompanyInfo() != null) {
-            this.companyId = fm.getCompanyInfo().getCompanyId();
-        }
+    public FrameDesignResponseDto(FrameManagement frameManagement, String designId) {
+        this.frameMngId = frameManagement.getFrameMngId();
+        this.frameId = frameManagement.getFrame().getFrameId();
+        this.companyId = frameManagement.getCompanyInfo().getCompanyId();
+        this.useYn = frameManagement.getUseYn();
+        this.designId = designId;
     }
 }
