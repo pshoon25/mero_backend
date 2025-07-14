@@ -28,7 +28,7 @@ public class ShootSettingsService {
             ShootSettings commonSettings = shootSettingsRepository.findByCompanyIdAndFrameId("COMMON", frameId);
             commonSettings.setSettingId(generateSettingId());
             commonSettings.setCompanyId(companyId);
-            return shootSettingRepository.save(commonSettings);
+            return shootSettingsRepository.save(commonSettings);
         } else {
            return result;
         }
