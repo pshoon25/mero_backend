@@ -1,7 +1,7 @@
 package com.mero.mero_backend.service;
 
-import com.mero.mero_backend.domain.entity.ShootSetting;
-import com.mero.mero_backend.repository.ShootSettingRepository;
+import com.mero.mero_backend.domain.entity.ShootSettings;
+import com.mero.mero_backend.repository.ShootSettingsRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class ShootSettingsService {
-    private final ShootSettingRepository shootSettingRepository;
+    private final ShootSettingsRepository shootSettingsRepository;
 
     @Transactional
-    public ShootSetting getShootSetting(String companyId, String frameId) {
-        ShootSetting result = shootSettingRepository.findByCompanyIdAndFrameId(companyId, frameId);
+    public ShootSettings getShootSetting(String companyId, String frameId) {
+        ShootSettings result = shootSettingsRepository.findByCompanyIdAndFrameId(companyId, frameId);
         if (result == null) {
-            ShootSetting commonSettings = shootSettingRepository.findByCompanyIdAndFrameId("COMMON", frameId);
+            ShootSettings commonSettings = shootSettingsRepository.findByCompanyIdAndFrameId("COMMON", frameId);
             commonSettings.setSettingId(generateSettingId());
             commonSettings.setCompanyId(companyId);
             return shootSettingRepository.save(commonSettings);
@@ -36,7 +36,7 @@ public class ShootSettingsService {
 
     public String generateSettingId() {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        int maxId = shootSettingRepository.findMaxIdByDate(today);
+        int maxId = shootSettingsRepository.findMaxIdByDate(today);
         String formattedId = String.format("%02d", maxId + 1);
         return today + formattedId;
     }
