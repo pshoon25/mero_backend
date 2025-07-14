@@ -57,15 +57,16 @@ public class FrameService {
 
     @Transactional
     public FrameManagement saveFrameDesign(MultipartFile file, FrameDesignRequestDto frameDesignRequestDto) {
+        String frameMngId = generateFrameMngId();
+        
         DesignManagement designManagement;
         try {
-            designManagement = designService.uploadImage(file, frameDesignRequestDto.getCompanyId(), frameDesignRequestDto.getApplicationType(), null);
+            designManagement = designService.uploadImage(file, frameDesignRequestDto.getCompanyId(), frameDesignRequestDto.getApplicationType(), frameMngId);
         } catch (IOException e) {
             throw new RuntimeException("프레임 디자인 이미지 업로드에 실패했습니다.", e);
         }
 
         FrameManagement frameManagement = new FrameManagement();
-        String frameMngId = generateFrameMngId();
         frameManagement.setFrameMngId(frameMngId);
         frameManagement.setFrameId(frameDesignRequestDto.getFrameId());
         frameManagement.setCompanyId(frameDesignRequestDto.getCompanyId());
