@@ -37,7 +37,7 @@ public class ShootSettingsController {
             response.put("message", "촬영 설정 값을 성공적으로 불러왔습니다.");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            log.error("프레임 목록 불러오기 실패: {}", e.getMessage());
+            log.error("촬영 설정 값 불러오기 실패: {}", e.getMessage());
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "촬영 설정 값을 불러오는데 실패했습니다: " + e.getMessage());
