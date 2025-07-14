@@ -25,7 +25,7 @@ public class ShootSettingsService {
     public ShootSettings getShootSetting(String companyId, String frameId) {
         ShootSettings result = shootSettingsRepository.findByCompanyIdAndFrameId(companyId, frameId);
         if (result == null) {
-            ShootSettings commonSettings = shootSettingsRepository.findByCompanyIdAndFrameId("COMMON", frameId);
+            ShootSettings commonSettings = shootSettingsRepository.findByCompanyIdAndFrameId("common", frameId);
             commonSettings.setSettingId(generateSettingId());
             commonSettings.setCompanyId(companyId);
             return shootSettingsRepository.save(commonSettings);
