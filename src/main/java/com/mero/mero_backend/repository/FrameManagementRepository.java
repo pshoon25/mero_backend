@@ -12,11 +12,12 @@ public interface FrameManagementRepository extends JpaRepository<FrameManagement
     @Query("SELECT COALESCE(CAST(MAX(CAST(SUBSTRING(fm.frameMngId, 9, 2) AS INTEGER)) AS INTEGER), 0) FROM FrameManagement fm WHERE SUBSTRING(fm.frame.frameId, 1, 8) = :date")
     Integer findMaxIdByDate(@Param("date") String date);
 
-    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignResponseDto(fm) " +
-            "FROM FrameManagement fm " +
-            "JOIN FETCH fm.companyInfo ci " +
-            "JOIN FETCH fm.frame f " +
-            "WHERE fm.frame.frameId = :frameId AND fm.companyInfo.companyId = :companyId")
+    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignResponseDto(fm, dm.designId) " +
+           "FROM FrameManagement fm " +
+           "JOIN FETCH fm.companyInfo ci " +
+           "JOIN FETCH fm.frame f " +
+           "LEFT JOIN DesignManagement dm ON dm.frameMngId = fm.frameMngId " +
+           "WHERE fm.frame.frameId = :frameId AND fm.companyInfo.companyId = :companyId")
     List<FrameDesignResponseDto> findByFrameIdAndCompanyId(
             @Param("frameId") String frameId,
             @Param("companyId") String companyId
