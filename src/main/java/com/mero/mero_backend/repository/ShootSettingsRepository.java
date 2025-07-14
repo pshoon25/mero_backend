@@ -9,5 +9,5 @@ public interface ShootSettingsRepository extends JpaRepository<ShootSettings, Lo
     @Query("SELECT COALESCE(CAST(MAX(CAST(SUBSTRING(s.settingId, 9, 2) AS INTEGER)) AS INTEGER), 0) FROM ShootSettings s WHERE SUBSTRING(s.settingId, 1, 8) = :date")
     Integer findMaxIdByDate(@Param("date") String date);
 
-    ShootSetting findByCompanyIdAndFrameId(String companyId, String frameId);
+    ShootSettings findByCompanyIdAndFrameId(String companyId, String frameId);
 }
