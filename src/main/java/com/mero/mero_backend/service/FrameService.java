@@ -43,6 +43,8 @@ public class FrameService {
         frame.setFrameId(frameId);
         frame.setDesignId(designManagement.getDesignId());
         frame.setFrameName(frameRequestDto.getFrameName());
+        frame.setFrameWidth(frameRequestDto.getFrameWidth());
+        frame.setFrameHeight(frameRequestDto.getFrameHeight());
         frame.setUseYn(frameRequestDto.getUseYn());
         return frameRepository.save(frame);
     }  
