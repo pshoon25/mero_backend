@@ -52,9 +52,9 @@ public class FrameController {
     }
 
     @GetMapping("/getFrames")
-    public ResponseEntity<Map<String, Object>> getFrames() {
+    public ResponseEntity<Map<String, Object>> getFrames(@RequestParam("companyId") String companyId) {
         try {
-            List<FrameResponseDto> frames = frameService.getFrames(); 
+            List<FrameResponseDto> frames = frameService.getFrames(companyId); 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("data", frames);
