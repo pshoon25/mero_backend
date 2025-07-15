@@ -22,6 +22,6 @@ public interface FrameRepository extends JpaRepository<Frame, Long> {
            "LEFT JOIN FrameManagement fm ON fm.frame = f " +
            "WHERE f.useYn = 'Y' " +
            "AND fm.companyId = :companyId " +
-           "AND fm.useYn = 'Y'")
+           "AND f.useYn = 'Y'")
     List<FrameResponseDto> getAllFramesWithDesignInfoByCompanyId(@Param("companyId") String companyId);
 }
