@@ -50,7 +50,7 @@ public class FrameService {
     }  
 
     public List<FrameResponseDto> getFrames(String companyId) {
-        return frameRepository.getAllFramesWithDesignInfo(companyId);
+        return frameRepository.getAllFramesWithDesignInfoByCompanyId(companyId);
     }
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
