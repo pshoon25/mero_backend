@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class FrameResponseDto {
     private String frameId;
     private String frameName;
-    private String useYn; /
+    private String useYn;
     private DesignManagementDto designManagement;
 
     public FrameResponseDto(Frame frame, String frameMngUseYn, String designId, String designImageUrl) {
