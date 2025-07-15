@@ -18,8 +18,10 @@ public interface FrameManagementRepository extends JpaRepository<FrameManagement
            "JOIN FETCH fm.frame f " +
            "LEFT JOIN DesignManagement dm ON dm.frameMngId = fm.frameMngId " +
            "WHERE fm.frame.frameId = :frameId AND fm.companyInfo.companyId = :companyId")
-    List<FrameDesignResponseDto> findByFrameIdAndCompanyId(
+    List<FrameDesignResponseDto> findFrameDesignByFrameIdAndCompanyId(
             @Param("frameId") String frameId,
             @Param("companyId") String companyId
     );
+
+    Optional<FrameManagement> findByFrameIdAndCompanyId(String frameId, String companyId);
 }
