@@ -16,10 +16,10 @@ public class FrameResponseDto {
     private String useYn;
     private DesignManagementDto designManagement; 
 
-    public FrameResponseDto(Frame frame) {
+    public FrameResponseDto(Frame frame, FrameManagement frameManagement) {
         this.frameId = frame.getFrameId();
         this.frameName = frame.getFrameName();
-        this.useYn = frame.getUseYn();
+        this.useYn = frameManagement.getUseYn();
 
         if (frame.getDesignManagement() != null) {
             this.designManagement = new DesignManagementDto(frame.getDesignManagement());
