@@ -54,26 +54,33 @@ public class FrameService {
     }
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
-        return frameManagementRepository.findByFrameIdAndCompanyId(frameId, companyId);
+           
+        return frameManagementRepository.findFrameDesignByFrameIdAndCompanyId(frameId, companyId);
     }
 
     @Transactional
-    public FrameManagement saveFrameDesign(MultipartFile file, FrameDesignRequestDto frameDesignRequestDto) {
-        String frameMngId = generateFrameMngId();
-        
-        DesignManagement designManagement;
+    public DesignManagement saveFrameDesign(MultipartFile file, FrameDesignRequestDto frameDesignRequestDto) {
+        FrameManagement frameManagement = frameManagementRepository.findByFrameIdAndCompanyId(frameDesignRequestDto.getFrameId(), frameDesignRequestDto.getCompanyId());
+        String frameMngId = frameManagement.getFrameMngId();
         try {
-            designManagement = designService.uploadImage(file, frameDesignRequestDto.getCompanyId(), frameDesignRequestDto.getApplicationType(), frameMngId);
+            return designService.uploadImage(file, frameDesignRequestDto.getCompanyId(), frameDesignRequestDto.getApplicationType(), frameMngId);
         } catch (IOException e) {
             throw new RuntimeException("프레임 디자인 이미지 업로드에 실패했습니다.", e);
         }
+    }
 
-        FrameManagement frameManagement = new FrameManagement();
-        frameManagement.setFrameMngId(frameMngId);
-        frameManagement.setFrameId(frameDesignRequestDto.getFrameId());
-        frameManagement.setCompanyId(frameDesignRequestDto.getCompanyId());
-        frameManagement.setUseYn(frameDesignRequestDto.getUseYn());
-        return frameManagementRepository.save(frameManagement);
+    public FrameManagement checkExistenceFrameManagement(String frameId, String companyId, String useYn) {
+        FrameManagement result = frameManagementRepository.findByFrameIdAndCompanyId(frameId, companyId);
+        if (result == null) {
+            FrameManagement frameManagement = new FrameManagement();
+            frameManagement.setFrameMngId(generateFrameMngId());
+            frameManagement.setFrameId(frameId);
+            frameManagement.setCompanyId(companyId);
+            frameManagement.setUseYn(useYn);
+            return frameManagementRepository.save(frameManagement);
+        } else {
+            return result;
+        }
     }
 
     public String generateFrameId() {
