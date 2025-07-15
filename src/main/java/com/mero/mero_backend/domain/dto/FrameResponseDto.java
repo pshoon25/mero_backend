@@ -2,6 +2,7 @@ package com.mero.mero_backend.domain.dto;
 
 import com.mero.mero_backend.domain.entity.CompanyInfo;
 import com.mero.mero_backend.domain.entity.Frame;
+import com.mero.mero_backend.domain.entity.FrameManagement;
 import com.mero.mero_backend.domain.entity.DesignManagement;
 import lombok.Getter;
 import lombok.Setter;
