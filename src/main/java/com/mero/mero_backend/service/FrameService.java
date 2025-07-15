@@ -49,8 +49,8 @@ public class FrameService {
         return frameRepository.save(frame);
     }  
 
-    public List<FrameResponseDto> getFrames() {
-        return frameRepository.getAllFramesWithDesignInfo();
+    public List<FrameResponseDto> getFrames(String companyId) {
+        return frameRepository.getAllFramesWithDesignInfo(companyId);
     }
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
