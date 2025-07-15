@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional
 
 public interface FrameManagementRepository extends JpaRepository<FrameManagement, String> {
     @Query("SELECT COALESCE(CAST(MAX(CAST(SUBSTRING(fm.frameMngId, 9, 2) AS INTEGER)) AS INTEGER), 0) FROM FrameManagement fm WHERE SUBSTRING(fm.frame.frameId, 1, 8) = :date")
