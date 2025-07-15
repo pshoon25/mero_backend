@@ -22,4 +22,15 @@ public class FrameResponseDto {
         this.designId = designId;       
         this.designImageUrl = designImageUrl; 
     }
+
+    public FrameResponseDto(Frame frame) {
+        this.frameId = frame.getFrameId();
+        this.frameName = frame.getFrameName();
+        this.useYn = frame.getUseYn(); // Or assign a default like "UNKNOWN" or null
+
+        if (frame.getDesignManagement() != null) {
+            this.designId = frame.getDesignManagement().getDesignId();
+            this.designImageUrl = frame.getDesignManagement().getDesignImageUrl();
+        }
+    }
 }
