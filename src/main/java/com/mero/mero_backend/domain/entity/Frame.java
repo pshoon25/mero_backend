@@ -33,6 +33,12 @@ public class Frame {
     @Column(name = "FRAME_NAME", nullable = false)
     private String frameName;
 
+    @Column(name = "FRAME_WIDTH")
+    private Integer frameWidth;
+
+    @Column(name = "FRAME_HEIGHT")
+    private Integer frameHeight;
+
     @Column(name = "USE_YN", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'Y'")
     private String useYn;
 
