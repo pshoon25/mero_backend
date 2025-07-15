@@ -13,12 +13,14 @@ public class FrameResponseDto {
     private String frameId;
     private String frameName;
     private String useYn;
-    private DesignManagementDto designManagement;
+    private String designId;
+    private String designImageUrl;
 
-    public FrameResponseDto(Frame frame, String frameMngUseYn, String designId, String designImageUrl) {
+    public FrameResponseDto(Frame frame, String frameMngUseYn, DesignManagementDto designManagement) {
         this.frameId = frame.getFrameId();
         this.frameName = frame.getFrameName();
         this.useYn = frameMngUseYn; 
-        this.designManagement = new DesignManagementDto(designId, designImageUrl);
+        this.designId = designManagement.getDesignId();
+        this.designImageUrl = designManagement.getDesignImageUrl();
     }
 }
