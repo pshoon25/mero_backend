@@ -109,4 +109,22 @@ public class FrameController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    @GetMapping("/app/getFrames")
+    public ResponseEntity<Map<String, Object>> getAppFrames(@RequestParam("companyId") String companyId) {
+        try {
+            List<FrameResponseDto> frames = frameService.getAppFrames(companyId);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", frames);
+            response.put("message", "프레임 목록을 성공적으로 불러왔습니다.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("프레임 목록 불러오기 실패: {}", e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "프레임 목록을 불러오는데 실패했습니다: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }

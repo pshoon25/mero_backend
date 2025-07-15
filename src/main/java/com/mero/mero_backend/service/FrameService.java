@@ -84,6 +84,10 @@ public class FrameService {
         }
     }
 
+    public List<FrameResponseDto> getAppFrames(String companyId) {
+        return frameRepository.getAllFramesWithDesignInfoByCompanyIdAndUseYn(companyId);
+    }
+
     public String generateFrameId() {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int maxId = frameRepository.findMaxIdByDate(today);

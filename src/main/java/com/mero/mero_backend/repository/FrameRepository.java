@@ -22,4 +22,13 @@ public interface FrameRepository extends JpaRepository<Frame, Long> {
            "LEFT JOIN FrameManagement fm ON fm.frame = f AND fm.companyId = :companyId " + 
            "WHERE f.useYn = 'Y'") 
     List<FrameResponseDto> getAllFramesWithDesignInfoByCompanyId(@Param("companyId") String companyId);
+
+    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameResponseDto(f, COALESCE(fm.useYn, 'N'), dm.designId, dm.designImageUrl) " +
+            "FROM Frame f " +
+            "JOIN FETCH f.designManagement dm " +
+            "JOIN FETCH dm.companyInfo ci " +
+            "LEFT JOIN FrameManagement fm ON fm.frame = f AND fm.companyId = :companyId " +
+            "WHERE f.useYn = 'Y' " +
+            "AND fm.useYn = 'Y'")
+    List<FrameResponseDto> getAllFramesWithDesignInfoByCompanyIdAndUseYn(@Param("companyId") String companyId);
 }
