@@ -6,6 +6,8 @@ import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
 import com.mero.mero_backend.domain.entity.FrameManagement;
+import com.mero.mero_backend.domain.entity.DesignManagement;
+
 import com.mero.mero_backend.service.FrameService;
 
 import lombok.RequiredArgsConstructor;
@@ -93,7 +95,7 @@ public class FrameController {
             @RequestPart(value = "image", required = false) MultipartFile file,
             @RequestPart("frameDesignRequestDto") FrameDesignRequestDto frameDesignRequestDto) {
         try {
-            FrameManagement result = frameService.saveFrameDesign(file, frameDesignRequestDto);
+            DesignManagement result = frameService.saveFrameDesign(file, frameDesignRequestDto);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "저장이 성공적으로 완료되었습니다.");
