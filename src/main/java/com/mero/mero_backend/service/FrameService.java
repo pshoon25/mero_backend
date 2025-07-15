@@ -59,37 +59,12 @@ public class FrameService {
 
     @Transactional
     public DesignManagement saveFrameDesign(MultipartFile file, FrameDesignRequestDto frameDesignRequestDto) {
-        FrameManagement frameManagement = frameManagementRepository.findByFrameIdAndCompanyId(frameDesignRequestDto.getFrameId(), frameDesignRequestDto.getCompanyId());
-        String frameMngId = frameManagement.getFrameMngId();
-        try {
-            return designService.uploadImage(file, frameDesignRequestDto.getCompanyId(), frameDesignRequestDto.getApplicationType(), frameMngId);
-        } catch (IOException e) {
-            throw new RuntimeException("프레임 디자인 이미지 업로드에 실패했습니다.", e);
-        }
-    }
-    
-    @Transactional
-    public DesignManagement saveFrameDesign(MultipartFile file, FrameDesignRequestDto frameDesignRequestDto) {
         Optional<FrameManagement> optionalFrameManagement = frameManagementRepository.findByFrameIdAndCompanyId(frameDesignRequestDto.getFrameId(), frameDesignRequestDto.getCompanyId());
         String frameMngId = optionalFrameManagement.get().getFrameMngId();
         try {
             return designService.uploadImage(file, frameDesignRequestDto.getCompanyId(), frameDesignRequestDto.getApplicationType(), frameMngId);
         } catch (IOException e) {
             throw new RuntimeException("프레임 디자인 이미지 업로드에 실패했습니다.", e);
-        }
-    }
-
-    public FrameManagement checkExistenceFrameManagement(String frameId, String companyId, String useYn) {
-        FrameManagement result = frameManagementRepository.findByFrameIdAndCompanyId(frameId, companyId);
-        if (result == null) {
-            FrameManagement frameManagement = new FrameManagement();
-            frameManagement.setFrameMngId(generateFrameMngId());
-            frameManagement.setFrameId(frameId);
-            frameManagement.setCompanyId(companyId);
-            frameManagement.setUseYn(useYn);
-            return frameManagementRepository.save(frameManagement);
-        } else {
-            return result;
         }
     }
 
