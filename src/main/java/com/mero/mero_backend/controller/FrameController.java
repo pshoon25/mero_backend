@@ -133,7 +133,7 @@ public class FrameController {
                                                                    @RequestParam("companyId") String companyId,
                                                                    @RequestParam("useYn") String useYn) {
         try {
-            int result = frameService.updateFrameMngUseYn(frameId, companyId, useYn);
+            FrameManagement result = frameService.updateFrameMngUseYn(frameId, companyId, useYn);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "사용 여부 변경이 성공적으로 완료되었습니다.");
