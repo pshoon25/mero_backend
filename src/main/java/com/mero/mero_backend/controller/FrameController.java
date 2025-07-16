@@ -2,6 +2,7 @@ package com.mero.mero_backend.controller;
 
 import com.mero.mero_backend.domain.dto.FrameDesignRequestDto;
 import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
+import com.mero.mero_backend.domain.dto.FrameManagementResponseDto;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
@@ -133,7 +134,7 @@ public class FrameController {
                                                                    @RequestParam("companyId") String companyId,
                                                                    @RequestParam("useYn") String useYn) {
         try {
-            FrameManagement result = frameService.updateFrameMngUseYn(frameId, companyId, useYn);
+            FrameManagementResponseDto result = frameService.updateFrameMngUseYn(frameId, companyId, useYn);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "사용 여부 변경이 성공적으로 완료되었습니다.");
