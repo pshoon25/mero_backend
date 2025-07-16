@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mero.mero_backend.service.FrameService;
+
 import java.io.IOException;
 import java.util.List;
 import java.time.LocalDate;
@@ -20,9 +22,12 @@ import java.util.Map;
 @Slf4j
 public class ShootSettingsService {
     private final ShootSettingsRepository shootSettingsRepository;
+    private final FrameService frameService;
 
     @Transactional
     public ShootSettings getShootSetting(String companyId, String frameId) {
+        frameService.checkExistenceFrameManagement(frameId, companyId);
+        
         ShootSettings result = shootSettingsRepository.findByCompanyIdAndFrameId(companyId, frameId);
         if (result == null) {
             ShootSettings commonSettings = shootSettingsRepository.findByCompanyIdAndFrameId("common", frameId);
