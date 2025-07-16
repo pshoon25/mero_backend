@@ -56,7 +56,7 @@ public class FrameService {
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
         FrameManagement checkFrameMng = checkExistenceFrameManagement(frameId, companyId);
-        return frameManagementRepository.findFrameDesignByFrameIdAndCompanyId(frameId, companyId);
+        return frameManagementRepository.findFrameDesignByFrameIdAndCompanyId(checkFrameMng.getFrameId(), checkFrameMng.getCompanyId());
     }
 
     @Transactional
