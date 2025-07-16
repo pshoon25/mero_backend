@@ -15,14 +15,12 @@ public class FrameDesignResponseDto {
     private String frameMngId;
     private String frameId;
     private String companyId;
-    private String useYn;
     private String designId;
 
     public FrameDesignResponseDto(FrameManagement frameManagement, String designId) {
         this.frameMngId = frameManagement.getFrameMngId();
         this.frameId = frameManagement.getFrame().getFrameId();
         this.companyId = frameManagement.getCompanyInfo().getCompanyId();
-        this.useYn = frameManagement.getUseYn();
         this.designId = designId;
     }
 }
