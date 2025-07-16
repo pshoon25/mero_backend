@@ -105,7 +105,7 @@ public class FrameService {
             frameManagement.setUseYn("N");
             return frameManagementRepository.save(frameManagement);
         } else {
-            return optionalResult;
+            return optionalResult.get();
         }
     }
 }
