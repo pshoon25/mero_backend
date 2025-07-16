@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface FrameRepository extends JpaRepository<Frame, Long> {
+public interface FrameRepository extends JpaRepository<Frame, String> {
     @Query("SELECT COALESCE(CAST(MAX(CAST(SUBSTRING(f.frameId, 9, 2) AS INTEGER)) AS INTEGER), 0) FROM Frame f WHERE SUBSTRING(f.frameId, 1, 8) = :date")
     Integer findMaxIdByDate(@Param("date") String date);
 
