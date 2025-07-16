@@ -127,4 +127,24 @@ public class FrameController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @PutMapping("/updateFrameMngUseYn")
+    public ResponseEntity<Map<String, Object>> updateFrameMngUseYn(@RequestParam("frameId") String frameId, 
+                                                                   @RequestParam("companyId") String companyId,
+                                                                   @RequestParam("useYn") String useYn) {
+        try {
+            int result = frameService.updateFrameMngUseYn(frameId, companyId, useYn);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "사용 여부 변경이 성공적으로 완료되었습니다.");
+            response.put("data", result);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("사용 여부 변경 실패", e);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "사용 여부 변경이 실패했습니다: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }
