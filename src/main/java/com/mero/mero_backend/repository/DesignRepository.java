@@ -1,10 +1,13 @@
 package com.mero.mero_backend.repository;
 
 import com.mero.mero_backend.domain.entity.DesignManagement;
+import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DesignRepository extends JpaRepository<DesignManagement, String> {
@@ -14,4 +17,15 @@ public interface DesignRepository extends JpaRepository<DesignManagement, String
     Optional<DesignManagement> findByCompanyIdAndApplicationType(String companyId, String applicationType);
 
     Optional<DesignManagement> findByCompanyIdAndApplicationTypeAndFrameMngId(String companyId, String applicationType, String frameMngId);
+
+    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignResponseDto(fm, dm.designId) " +
+           "FROM DesignManagement dm " +
+           "JOIN FETCH fm.companyInfo ci " +
+           "JOIN FETCH fm.frame f " +
+           "LEFT JOIN FrameManagement fm ON fm.frameMngId = dm.frameMngId " +            
+           "WHERE fm.frame.frameId = :frameId AND fm.companyInfo.companyId = :companyId")
+    List<FrameDesignResponseDto> findFrameDesignByFrameIdAndCompanyId(
+            @Param("frameId") String frameId,
+            @Param("companyId") String companyId
+    );
 }
