@@ -6,6 +6,7 @@ import com.mero.mero_backend.domain.dto.FrameManagementResponseDto;
 import com.mero.mero_backend.domain.entity.FrameManagement;
 import com.mero.mero_backend.repository.FrameManagementRepository;
 import com.mero.mero_backend.repository.FrameRepository;
+import com.mero.mero_backend.repository.DesignRepository;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class FrameService {
     private final FrameRepository frameRepository;
     private final FrameManagementRepository frameManagementRepository;
+    private final DesignRepository designRepository;
     private final DesignService designService;
 
     @Transactional
@@ -57,7 +59,7 @@ public class FrameService {
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
         FrameManagement checkFrameMng = checkExistenceFrameManagement(frameId, companyId);
-        return frameManagementRepository.findFrameDesignByFrameIdAndCompanyId(checkFrameMng.getFrameId(), checkFrameMng.getCompanyId());
+        return designRepository.findFrameDesignByFrameIdAndCompanyId(checkFrameMng.getFrameId(), checkFrameMng.getCompanyId());
     }
 
     @Transactional
