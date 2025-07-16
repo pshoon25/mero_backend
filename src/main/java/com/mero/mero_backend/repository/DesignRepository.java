@@ -24,8 +24,8 @@ public interface DesignRepository extends JpaRepository<DesignManagement, String
         "LEFT JOIN FETCH fm.companyInfo ci " +    
         "LEFT JOIN FETCH fm.frame f " +           
         "WHERE f.frameId = :frameId AND ci.companyId = :companyId")
-List<FrameDesignResponseDto> findFrameDesignByFrameIdAndCompanyId(
-        @Param("frameId") String frameId,
-        @Param("companyId") String companyId
-);
+    List<FrameDesignResponseDto> findFrameDesignByFrameIdAndCompanyId(
+            @Param("frameId") String frameId,
+            @Param("companyId") String companyId
+    );
 }
