@@ -24,5 +24,5 @@ public interface FrameManagementRepository extends JpaRepository<FrameManagement
             @Param("companyId") String companyId
     );
 
-    Optional<FrameManagement> findByFrame_FrameIdAndCompanyInfo_CompanyId(String frameId, String companyId); 
+    Optional<FrameManagement> findByFrameIdAndCompanyId(String frameId, String companyId); 
 }
