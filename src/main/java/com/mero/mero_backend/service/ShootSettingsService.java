@@ -1,6 +1,7 @@
 package com.mero.mero_backend.service;
 
 import com.mero.mero_backend.domain.entity.ShootSettings;
+import com.mero.mero_backend.domain.entity.FrameManagement;
 import com.mero.mero_backend.repository.ShootSettingsRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,8 @@ public class ShootSettingsService {
 
     @Transactional
     public ShootSettings getShootSetting(String companyId, String frameId) {
-        frameService.checkExistenceFrameManagement(frameId, companyId);
-        
-        ShootSettings result = shootSettingsRepository.findByCompanyIdAndFrameId(companyId, frameId);
+        FrameManagement frameManagement = frameService.checkExistenceFrameManagement(frameId, companyId);
+        ShootSettings result = shootSettingsRepository.findByCompanyIdAndFrameId(frameManagement.getCompanyId(), frameManagement.getFrameId());
         if (result == null) {
             ShootSettings commonSettings = shootSettingsRepository.findByCompanyIdAndFrameId("common", frameId);
             commonSettings.setSettingId(generateSettingId());
