@@ -25,4 +25,7 @@ public interface FrameManagementRepository extends JpaRepository<FrameManagement
     );
 
     Optional<FrameManagement> findByFrameIdAndCompanyId(String frameId, String companyId);
+
+    @Query("UPDATE FrameManagement fm SET fm.useYn = :useYn WHERE fm.frame.frameId = :frameId AND fm.companyInfo.companyId = :companyId")
+    int updateUseYnByFrameIdAndCompanyId(@Param("frameId") String frameId, @Param("companyId") String companyId, @Param("useYn") String useYn);
 }
