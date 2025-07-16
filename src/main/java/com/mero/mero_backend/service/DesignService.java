@@ -137,7 +137,7 @@ public class DesignService {
 
     public Resource getImageFile(String designId) {
         try {
-            DesignManagement design = designRepository.findById(Long.parseLong(designId)).orElseThrow(() -> new RuntimeException("Design not found"));
+            DesignManagement design = designRepository.findById(designId).orElseThrow(() -> new RuntimeException("Design not found"));
             Path filePath = Paths.get(UPLOAD_DIR, design.getCompanyId(), design.getApplicationType().toLowerCase(), design.getFileName());
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
@@ -150,12 +150,12 @@ public class DesignService {
     }
 
     public void deleteImage(String designId) throws IOException {
-        DesignManagement design = designRepository.findById(Long.parseLong(designId)).orElseThrow(() -> new RuntimeException("Design not found"));
+        DesignManagement design = designRepository.findById(designId).orElseThrow(() -> new RuntimeException("Design not found"));
 
         Path filePath = Paths.get(UPLOAD_DIR).resolve(design.getFileName());
         if (Files.exists(filePath)) {
             Files.delete(filePath);
-            designRepository.deleteById(Long.parseLong(designId));
+            designRepository.deleteById(designId);
         } else {
             throw new RuntimeException("File not found");
         }
