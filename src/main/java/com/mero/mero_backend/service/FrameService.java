@@ -88,6 +88,10 @@ public class FrameService {
         return frameRepository.getAllFramesWithDesignInfoByCompanyIdAndUseYn(companyId);
     }
 
+    public int updateFrameMngUseYn(String frameId, String companyId, String useYn) {
+        return frameManagementRepository.updateUseYnByFrameIdAndCompanyId(frameId, companyId, useYn);
+    }
+
     public String generateFrameId() {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int maxId = frameRepository.findMaxIdByDate(today);
