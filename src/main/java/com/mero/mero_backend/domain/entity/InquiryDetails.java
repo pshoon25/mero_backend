@@ -18,7 +18,7 @@ import java.util.Date;
 public class InquiryDetails {
     @Id
     @Column(name = "INQUIRY_ID")
-    private Long inquiryId;
+    private String inquiryId;
 
     @Column(name = "COMPANY", nullable = false)
     private String company;
