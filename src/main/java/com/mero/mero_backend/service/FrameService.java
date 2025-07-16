@@ -55,7 +55,7 @@ public class FrameService {
     }
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
-        checkExistenceFrameManagement(frameId, companyId);
+        FrameManagement checkFrameMng = checkExistenceFrameManagement(frameId, companyId);
         return frameManagementRepository.findFrameDesignByFrameIdAndCompanyId(frameId, companyId);
     }
 
@@ -75,8 +75,9 @@ public class FrameService {
     }
 
     public int updateFrameMngUseYn(String frameId, String companyId, String useYn) {
-        checkExistenceFrameManagement(frameId, companyId);
-        return frameManagementRepository.updateUseYnByFrameIdAndCompanyId(frameId, companyId, useYn);
+        FrameManagement checkFrameMng = checkExistenceFrameManagement(frameId, companyId);
+        checkFrameMng.setUseYn(useYn);
+        return frameManagementRepository.save(checkFrameMng);
     }
 
     public String generateFrameId() {
@@ -94,7 +95,7 @@ public class FrameService {
     }
 
     @Transactional
-    public void checkExistenceFrameManagement(String frameId, String companyId) {
+    public FrameManagement checkExistenceFrameManagement(String frameId, String companyId) {
         Optional<FrameManagement> optionalResult = frameManagementRepository.findByFrameIdAndCompanyId(frameId, companyId);
         if (optionalResult.isEmpty()) { 
             FrameManagement frameManagement = new FrameManagement();
@@ -102,7 +103,9 @@ public class FrameService {
             frameManagement.setFrameId(frameId);
             frameManagement.setCompanyId(companyId);
             frameManagement.setUseYn("N");
-            frameManagementRepository.save(frameManagement);
+            return frameManagementRepository.save(frameManagement);
+        } else {
+            return optionalResult;
         }
     }
 }
