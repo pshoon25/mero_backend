@@ -19,13 +19,13 @@ public interface DesignRepository extends JpaRepository<DesignManagement, String
     Optional<DesignManagement> findByCompanyIdAndApplicationTypeAndFrameMngId(String companyId, String applicationType, String frameMngId);
 
     @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignResponseDto(fm, dm.designId) " +
-            "FROM DesignManagement dm " +
-            "LEFT JOIN FETCH dm.frameManagement fm " + 
-            "LEFT JOIN FETCH fm.companyInfo ci " +   
-            "LEFT JOIN FETCH fm.frame f " +          
-            "WHERE f.frameId = :frameId AND ci.companyId = :companyId") 
-    List<FrameDesignResponseDto> findFrameDesignByFrameIdAndCompanyId(
-            @Param("frameId") String frameId,
-            @Param("companyId") String companyId
-    );
+        "FROM DesignManagement dm " +
+        "LEFT JOIN FrameManagement fm ON fm.frameMngId = dm.frameMngId " + 
+        "LEFT JOIN FETCH fm.companyInfo ci " +    
+        "LEFT JOIN FETCH fm.frame f " +           
+        "WHERE f.frameId = :frameId AND ci.companyId = :companyId")
+List<FrameDesignResponseDto> findFrameDesignByFrameIdAndCompanyId(
+        @Param("frameId") String frameId,
+        @Param("companyId") String companyId
+);
 }
