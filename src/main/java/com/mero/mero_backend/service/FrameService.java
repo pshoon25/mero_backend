@@ -55,6 +55,7 @@ public class FrameService {
     }
 
     public List<FrameDesignResponseDto> getFrameDesigns(String frameId, String companyId) {
+        checkExistenceFrameManagement(frameId, companyId);
         return frameManagementRepository.findFrameDesignByFrameIdAndCompanyId(frameId, companyId);
     }
 
@@ -68,27 +69,13 @@ public class FrameService {
             throw new RuntimeException("프레임 디자인 이미지 업로드에 실패했습니다.", e);
         }
     }
-
-    @Transactional
-    public FrameManagement checkExistenceFrameManagement(String frameId, String companyId, String useYn) {
-        Optional<FrameManagement> optionalResult = frameManagementRepository.findByFrameIdAndCompanyId(frameId, companyId);
-        if (optionalResult.isEmpty()) { 
-            FrameManagement frameManagement = new FrameManagement();
-            frameManagement.setFrameMngId(generateFrameMngId());
-            frameManagement.setFrameId(frameId);
-            frameManagement.setCompanyId(companyId);
-            frameManagement.setUseYn(useYn);
-            return frameManagementRepository.save(frameManagement);
-        } else {
-            return optionalResult.get(); 
-        }
-    }
-
+    
     public List<FrameResponseDto> getAppFrames(String companyId) {
         return frameRepository.getAllFramesWithDesignInfoByCompanyIdAndUseYn(companyId);
     }
 
     public int updateFrameMngUseYn(String frameId, String companyId, String useYn) {
+        checkExistenceFrameManagement(frameId, companyId);
         return frameManagementRepository.updateUseYnByFrameIdAndCompanyId(frameId, companyId, useYn);
     }
 
@@ -104,5 +91,18 @@ public class FrameService {
         int maxId = frameManagementRepository.findMaxIdByDate(today);
         String formattedId = String.format("%02d", maxId + 1);
         return today + formattedId;
+    }
+
+    @Transactional
+    public void checkExistenceFrameManagement(String frameId, String companyId) {
+        Optional<FrameManagement> optionalResult = frameManagementRepository.findByFrameIdAndCompanyId(frameId, companyId);
+        if (optionalResult.isEmpty()) { 
+            FrameManagement frameManagement = new FrameManagement();
+            frameManagement.setFrameMngId(generateFrameMngId());
+            frameManagement.setFrameId(frameId);
+            frameManagement.setCompanyId(companyId);
+            frameManagement.setUseYn("N");
+            frameManagementRepository.save(frameManagement);
+        }
     }
 }
