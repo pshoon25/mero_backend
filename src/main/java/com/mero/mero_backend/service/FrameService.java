@@ -2,6 +2,7 @@ package com.mero.mero_backend.service;
 
 import com.mero.mero_backend.domain.dto.FrameDesignRequestDto;
 import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
+import com.mero.mero_backend.domain.dto.FrameManagementResponseDto;
 import com.mero.mero_backend.domain.entity.FrameManagement;
 import com.mero.mero_backend.repository.FrameManagementRepository;
 import com.mero.mero_backend.repository.FrameRepository;
@@ -74,10 +75,11 @@ public class FrameService {
         return frameRepository.getAllFramesWithDesignInfoByCompanyIdAndUseYn(companyId);
     }
 
-    public FrameManagement updateFrameMngUseYn(String frameId, String companyId, String useYn) {
+    public FrameManagementResponseDto updateFrameMngUseYn(String frameId, String companyId, String useYn) {
         FrameManagement checkFrameMng = checkExistenceFrameManagement(frameId, companyId);
         checkFrameMng.setUseYn(useYn);
-        return frameManagementRepository.save(checkFrameMng);
+        FrameManagement result = frameManagementRepository.save(checkFrameMng);
+        return new FrameManagementResponseDto(result);
     }
 
     public String generateFrameId() {
