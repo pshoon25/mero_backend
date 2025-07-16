@@ -74,7 +74,7 @@ public class FrameService {
         return frameRepository.getAllFramesWithDesignInfoByCompanyIdAndUseYn(companyId);
     }
 
-    public int updateFrameMngUseYn(String frameId, String companyId, String useYn) {
+    public FrameManagement updateFrameMngUseYn(String frameId, String companyId, String useYn) {
         FrameManagement checkFrameMng = checkExistenceFrameManagement(frameId, companyId);
         checkFrameMng.setUseYn(useYn);
         return frameManagementRepository.save(checkFrameMng);
