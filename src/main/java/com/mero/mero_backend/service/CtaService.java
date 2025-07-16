@@ -34,7 +34,7 @@ public class CtaService {
         rentalEndDate = Date.from(localRentalEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         InquiryDetails inquiryDetails = new InquiryDetails();
-        Long inquiryId = ctaRepository.findMaxInquiryId();
+        String inquiryId = ctaRepository.findMaxInquiryId();
         inquiryDetails.setInquiryId(inquiryId);
         inquiryDetails.setCompany(String.valueOf(requestMap.get("company")));
         inquiryDetails.setContactNumber(String.valueOf(requestMap.get("contactNumber")));
