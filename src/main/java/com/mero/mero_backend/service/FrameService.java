@@ -1,15 +1,11 @@
 package com.mero.mero_backend.service;
 
-import com.mero.mero_backend.domain.dto.FrameDesignRequestDto;
-import com.mero.mero_backend.domain.dto.FrameDesignResponseDto;
-import com.mero.mero_backend.domain.dto.FrameManagementResponseDto;
+import com.mero.mero_backend.domain.dto.*;
 import com.mero.mero_backend.domain.entity.FrameManagement;
 import com.mero.mero_backend.repository.FrameManagementRepository;
 import com.mero.mero_backend.repository.FrameRepository;
 import com.mero.mero_backend.repository.DesignRepository;
 import com.mero.mero_backend.domain.entity.Frame;
-import com.mero.mero_backend.domain.dto.FrameRequestDto;
-import com.mero.mero_backend.domain.dto.FrameResponseDto;
 import com.mero.mero_backend.domain.entity.DesignManagement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,6 +78,10 @@ public class FrameService {
         checkFrameMng.setUseYn(useYn);
         FrameManagement result = frameManagementRepository.save(checkFrameMng);
         return new FrameManagementResponseDto(result);
+    }
+
+    public List<FrameDesignAndSettingsResponseDto> getFrameDesignsAndSettings(String frameId, String companyId) {
+        return frameManagementRepository.getFrameDesignAndSettingsByCompanyIdAndFrameId(frameId, companyId);
     }
 
     public String generateFrameId() {
