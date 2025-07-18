@@ -37,7 +37,7 @@ public interface FrameManagementRepository extends JpaRepository<FrameManagement
 //            @Param("frameId") String frameId
 //    );
 
-    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignAndSettingsResponseDto(fm, dm, f, ss) " +
+    @Query("SELECT new com.mero.mero_backend.domain.dto.FrameDesignAndSettingsResponseDto(fm, dm, ss, f) " +
             "FROM DesignManagement dm " +
             "LEFT JOIN FrameManagement fm ON fm.frameMngId = dm.frameMngId " +
             "LEFT JOIN FETCH fm.companyInfo ci " +
