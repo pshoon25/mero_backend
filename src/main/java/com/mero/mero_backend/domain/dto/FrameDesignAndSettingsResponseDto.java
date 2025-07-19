@@ -18,9 +18,9 @@ public class FrameDesignAndSettingsResponseDto {
     private String frameId;
     private String companyId;
     private String designId;
-    private String countdownTime;
-    private String shotCount;
-    private String printCount;
+    private Integer countdownTime;
+    private Integer shotCount;
+    private Integer printCount;
     private Integer frameWidth;
     private Integer frameHeight;
 

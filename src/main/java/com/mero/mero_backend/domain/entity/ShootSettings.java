@@ -24,13 +24,13 @@ public class ShootSettings {
     private String frameId;
 
     @Column(name = "COUNTDOWN_TIME", nullable = false)
-    private String countdownTime;
+    private Integer countdownTime;
   
     @Column(name = "SHOT_COUNT", nullable = false)
-    private String shotCount;
+    private Integer shotCount;
   
     @Column(name = "PRINT_COUNT", nullable = false)
-    private String printCount;
+    private Integer printCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COMPANY_ID", referencedColumnName = "COMPANY_ID", insertable = false, updatable = false)
