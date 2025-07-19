@@ -45,4 +45,8 @@ public class Frame {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DESIGN_ID", referencedColumnName = "DESIGN_ID", insertable = false, updatable = false)
     private DesignManagement designManagement;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FRAME_ID", referencedColumnName = "FRAME_ID", insertable = false, updatable = false) // ShootSettings의 외래 키가 Frame의 FRAME_ID를 참조한다고 가정
+    private ShootSettings shootSettings;
 }
