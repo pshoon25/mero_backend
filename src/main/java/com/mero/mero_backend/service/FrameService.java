@@ -45,6 +45,15 @@ public class FrameService {
         frame.setFrameName(frameRequestDto.getFrameName());
         frame.setFrameWidth(frameRequestDto.getFrameWidth());
         frame.setFrameHeight(frameRequestDto.getFrameHeight());
+        frame.setFrameCellCnt(frameRequestDto.getFrameCellCnt());
+        frame.setCellWidth(frameRequestDto.getCellWidth());
+        frame.setCellHeight(frameRequestDto.getCellHeight());
+        frame.setBorderTop(frameRequestDto.getBorderTop());
+        frame.setBorderBottom(frameRequestDto.getBorderBottom());
+        frame.setBorderLeft(frameRequestDto.getBorderLeft());
+        frame.setBorderRight(frameRequestDto.getBorderRight());
+        frame.setCrossbarHorizontal(frameRequestDto.getCrossbarHorizontal());
+        frame.setCrossbarVertical(frameRequestDto.getCrossbarVertical());
         frame.setUseYn(frameRequestDto.getUseYn());
         return frameRepository.save(frame);
     }  
