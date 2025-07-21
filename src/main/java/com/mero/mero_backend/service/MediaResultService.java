@@ -45,18 +45,17 @@ public class MediaResultService {
         mediaResults.setResultId(resultId);
         mediaResults.setCompanyId(mediaResultsRequestDto.getCompanyId());
         mediaResults.setFrameMngId(mediaResultsRequestDto.getFrameMngId());
-        mediaResults.setDesignId(mediaResultsRequestDto.getDesignId());
-        String recordGroup = generateRecordGroup();
-        mediaResults.setRecordGroup(recordGroup);
+        mediaResults.setDesignId(designManagement.getDesignId());
+        mediaResults.setRecordGroup(mediaResultsRequestDto.getRecordGroup());
         mediaResults.setType(mediaResultsRequestDto.getType());
         mediaResults.setRecordDateTime(LocalDate.now());
         return mediaResultsRepository.save(mediaResults);
-    }  
+    }
 
     public String generateResultId(String companyId) {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        int maxId = mediaResultsRepository.findMaxIdByDateAndCompanyId(today, companyId);
-        String formattedId = String.format("%04d", maxId + 1);
-        return companyId + "-" + today + "-" + formattedId;
+        int maxSequence = mediaResultsRepository.findMaxSequenceIdByCompanyIdAndDate(companyId, today);
+        String formattedSequence = String.format("%04d", maxSequence + 1);
+        return companyId + "-" + today + "-" + formattedSequence;
     }
 }
