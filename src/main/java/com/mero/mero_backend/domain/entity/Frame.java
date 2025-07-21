@@ -39,6 +39,33 @@ public class Frame {
     @Column(name = "FRAME_HEIGHT")
     private Integer frameHeight;
 
+    @Column(name = "FRAME_CELL_CNT")
+    private Integer frameCellCnt;
+
+    @Column(name = "CELL_WIDTH")
+    private Integer cellWidth;
+
+    @Column(name = "CELL_HEIGHT")
+    private Integer cellHeight;
+
+    @Column(name = "BORDER_TOP")
+    private Integer borderTop;
+
+    @Column(name = "BORDER_BOTTOM")
+    private Integer borderBottom;
+
+    @Column(name = "BORDER_LEFT")
+    private Integer borderLeft;
+
+    @Column(name = "BORDER_RIGHT")
+    private Integer borderRight;
+
+    @Column(name = "CROSSBAR_HORIZONTAL")
+    private Integer crossbarHorizontal;
+
+    @Column(name = "CROSSBAR_VERTICAL")
+    private Integer crossbarVertical;
+
     @Column(name = "USE_YN", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'Y'")
     private String useYn;
 
