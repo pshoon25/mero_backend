@@ -52,7 +52,7 @@ public class MediaResultService {
         return mediaResultsRepository.save(mediaResults);
     }
 
-    public List<MediaResults> getMediaResults(String companyId) {
+    public List<MedaiResultsResponseDto> getMediaResults(String companyId) {
         return mediaResultsRepository.findAllByCompanyId(companyId);
     }
 
