@@ -72,7 +72,7 @@ public class MediaResultsController {
             List<MediaResults> mediaResults = mediaResultService.getMediaResults(companyId); 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("data", frames);
+            response.put("data", mediaResults);
             response.put("message", "결과물 목록을 성공적으로 불러왔습니다.");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
