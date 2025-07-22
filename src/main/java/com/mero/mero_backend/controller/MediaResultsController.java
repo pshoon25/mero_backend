@@ -65,4 +65,22 @@ public class MediaResultsController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    @GetMapping("/getMediaResults")
+    public ResponseEntity<Map<String, Object>> getMediaResults(@RequestParam("companyId") String companyId) {
+        try {
+            List<MediaResults> mediaResults = mediaResultService.getMediaResults(companyId); 
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", frames);
+            response.put("message", "결과물 목록을 성공적으로 불러왔습니다.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("프레임 목록 불러오기 실패: {}", e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "결과물 목록을 불러오는데 실패했습니다: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }
