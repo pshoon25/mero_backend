@@ -4,6 +4,7 @@ import com.mero.mero_backend.domain.entity.MediaResults;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 @Getter 
 @Setter
@@ -15,7 +16,7 @@ public class MedaiResultsResponseDto {
     private String designId;
     private String recordGroup;
     private String type;
-    private Date recordDateTime;
+    private LocalDate recordDateTime;
 
     public MedaiResultsResponseDto(MediaResults mediaResults) {
         this.resultId = mediaResults.getResultId();
