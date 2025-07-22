@@ -52,6 +52,10 @@ public class MediaResultService {
         return mediaResultsRepository.save(mediaResults);
     }
 
+    public List<MediaResults> getMediaResults(String companyId) {
+        return mediaResultsRepository.findAllByCompanyId(companyId);
+    }
+
     public String generateResultId(String companyId) {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int maxSequence = mediaResultsRepository.findMaxSequenceIdByCompanyIdAndDate(companyId, today);
