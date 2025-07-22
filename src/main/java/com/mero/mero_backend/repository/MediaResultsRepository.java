@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface MediaResultsRepository extends JpaRepository<MediaResults, String> {
     @Query(value = "SELECT COALESCE(MAX(CAST(SUBSTRING(mr.recordGroup, 10, 4) AS INTEGER)), 0) " +
                    "FROM MediaResults mr " +
@@ -15,4 +17,6 @@ public interface MediaResultsRepository extends JpaRepository<MediaResults, Stri
                     "FROM MediaResults mr " +
                     "WHERE SUBSTRING(mr.resultId, 1, 10) = :companyId AND SUBSTRING(mr.resultId, 12, 8) = :date")
     Integer findMaxSequenceIdByCompanyIdAndDate(@Param("companyId") String companyId, @Param("date") String date);
+
+    List<MediaResults> findAllByCompanyId(String companyId);
 }
