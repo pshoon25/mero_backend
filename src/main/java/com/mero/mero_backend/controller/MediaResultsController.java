@@ -2,6 +2,7 @@ package com.mero.mero_backend.controller;
 
 import com.mero.mero_backend.domain.dto.FrameRequestDto;
 import com.mero.mero_backend.domain.dto.FrameResponseDto;
+import com.mero.mero_backend.domain.dto.MedaiResultsResponseDto;
 import com.mero.mero_backend.domain.dto.MediaResultsRequestDto;
 import com.mero.mero_backend.domain.entity.Frame;
 import com.mero.mero_backend.domain.entity.MediaResults;
@@ -69,7 +70,7 @@ public class MediaResultsController {
     @GetMapping("/getMediaResults")
     public ResponseEntity<Map<String, Object>> getMediaResults(@RequestParam("companyId") String companyId) {
         try {
-            List<MediaResults> mediaResults = mediaResultService.getMediaResults(companyId); 
+            List<MedaiResultsResponseDto> mediaResults = mediaResultService.getMediaResults(companyId); 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("data", mediaResults);
