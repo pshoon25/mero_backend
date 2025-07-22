@@ -17,7 +17,7 @@ public class MedaiResultsResponseDto {
     private String type;
     private Date recordDateTime;
 
-    public MediaResultsDTO(MediaResults mediaResults) {
+    public MedaiResultsResponseDto(MediaResults mediaResults) {
         this.resultId = mediaResults.getResultId();
         this.companyId = mediaResults.getCompanyId();
         this.frameMngId = mediaResults.getFrameMngId();
