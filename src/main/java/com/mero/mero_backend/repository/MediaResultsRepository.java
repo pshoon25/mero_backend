@@ -1,6 +1,7 @@
 package com.mero.mero_backend.repository;
 
 import com.mero.mero_backend.domain.entity.MediaResults;
+import com.mero.mero_backend.domain.dto.MedaiResultsResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,5 @@ public interface MediaResultsRepository extends JpaRepository<MediaResults, Stri
                     "WHERE SUBSTRING(mr.resultId, 1, 10) = :companyId AND SUBSTRING(mr.resultId, 12, 8) = :date")
     Integer findMaxSequenceIdByCompanyIdAndDate(@Param("companyId") String companyId, @Param("date") String date);
 
-    List<MediaResults> findAllByCompanyId(String companyId);
+    List<MedaiResultsResponseDto> findAllByCompanyId(String companyId);
 }
