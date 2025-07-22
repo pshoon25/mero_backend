@@ -42,11 +42,14 @@ public class MediaResultsController {
         }
     }
 
-    @PostMapping("/saveMediaResults")
+    @PostMapping(value = "/saveMediaResults", consumes = "multipart/form-data")
     public ResponseEntity<Map<String, Object>> saveMediaResults(
             @RequestPart(value = "image", required = false) MultipartFile file,
-            @RequestPart("mediaResultsRequestDto") MediaResultsRequestDto mediaResultsRequestDto) {
+            @RequestPart("mediaResultsRequestDto") String dtoJson) {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            MediaResultsRequestDto mediaResultsRequestDto = objectMapper.readValue(dtoJson, MediaResultsRequestDto.class);
+            
             MediaResults result = mediaResultService.saveMediaResults(file, mediaResultsRequestDto);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
