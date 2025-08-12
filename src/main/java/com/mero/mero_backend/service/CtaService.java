@@ -34,7 +34,7 @@ public class CtaService {
         rentalEndDate = Date.from(localRentalEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         InquiryDetails inquiryDetails = new InquiryDetails();
-        String inquiryId = ctaRepository.findMaxInquiryId();
+        String inquiryId = this.generateInquiryId();
         inquiryDetails.setInquiryId(inquiryId);
         inquiryDetails.setCompany(String.valueOf(requestMap.get("company")));
         inquiryDetails.setContactNumber(String.valueOf(requestMap.get("contactNumber")));
@@ -49,5 +49,12 @@ public class CtaService {
 
     public List<InquiryDetails> getInquiryDetailsList() {
         return ctaRepository.findAll();
+    }
+
+    public String generateInquiryId() {
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int maxId = ctaRepository.findMaxIdByDate(today);
+        String formattedId = String.format("%02d", maxId + 1);
+        return today + formattedId;
     }
 }
