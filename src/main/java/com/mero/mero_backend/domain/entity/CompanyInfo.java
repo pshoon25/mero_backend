@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "COMPANY_INFO")
@@ -59,8 +60,8 @@ public class CompanyInfo {
     private String useYn; // 사용여부
 
     @Column(name = "REGISTER_DATE_TIME")
-    private LocalDate registerDateTime; // 등록일자
+    private LocalDateTime registerDateTime; // 등록일자
 
     @Column(name = "UPDATE_DATE_TIME")
-    private LocalDate updateDateTime; // 수정일자
+    private LocalDateTime updateDateTime; // 수정일자
 }
