@@ -40,4 +40,9 @@ public class CompanyController {
                                           @RequestParam("useYn") String useYn) {
         return companyInfoService.updateUseYnByCompanyId(companyId, useYn);
     }
+
+    @PutMapping("/updateCompanyInfo")
+    public int updateCompanyInfo(@RequestBody CompanyInfo companyInfo) {
+        return companyInfoService.updateCompanyInfo(companyInfo);
+    }
 }

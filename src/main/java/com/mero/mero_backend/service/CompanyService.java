@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -65,6 +66,33 @@ public class CompanyService {
     @Transactional
     public int updateUseYnByCompanyId(String companyId, String useYn) {
         return companyRepository.updateUseYnByCompanyId(companyId, useYn);
+    }
+
+    @Transactional
+    public int updateCompanyInfo(CompanyInfo companyInfo) {
+        // 비밀번호 암호화
+        String salt = encrypt.getSalt();
+        String encodedPw = encrypt.getEncrypt(String.valueOf(companyInfo.getLoginPw()), salt);
+
+        // salt 정보 저장
+        CompanySalt companySalt = new CompanySalt();
+        companySalt.setCompanyId(companyInfo.getCompanyId());
+        companySalt.setSalt(salt);
+        companySaltRepository.save(companySalt);
+
+        return companyRepository.updateCompanyInfo(
+                companyInfo.getCompanyId(),
+                encodedPw,
+                companyInfo.getCompany(),
+                companyInfo.getCeoName(),
+                companyInfo.getBusinessNumber(),
+                companyInfo.getAddress(),
+                companyInfo.getManager(),
+                companyInfo.getEmail(),
+                companyInfo.getContactNumber(),
+                companyInfo.getRemarks(),
+                LocalDateTime.now()
+        );
     }
 
     public String generateCompanyInfoId() {
