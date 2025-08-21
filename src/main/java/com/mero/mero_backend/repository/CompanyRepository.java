@@ -3,6 +3,7 @@ package com.mero.mero_backend.repository;
 import com.mero.mero_backend.domain.entity.CompanyInfo;
 import com.mero.mero_backend.domain.entity.InquiryDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,4 +16,8 @@ public interface CompanyRepository extends JpaRepository<CompanyInfo, String> {
     CompanyInfo findByCompany(String company);
 
     CompanyInfo findByCompanyId(String companyId);
+
+    @Modifying
+    @Query("UPDATE CompanyInfo c SET c.useYn = :useYn WHERE c.companyId = :companyId")
+    int updateUseYnByCompanyId(@Param("companyId") String companyId, @Param("useYn") String useYn);
 }

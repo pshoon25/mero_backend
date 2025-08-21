@@ -34,4 +34,10 @@ public class CompanyController {
     public CompanyInfo getCompanyInfo(@RequestParam("companyId") String companyId) {
         return companyInfoService.getCompanyInfo(companyId);
     }
+
+    @PutMapping("/updateCompanyUseYn")
+    public int updateCompanyUseYn(@RequestParam("companyId") String companyId,
+                                          @RequestParam("useYn") String useYn) {
+        return companyInfoService.updateUseYnByCompanyId(companyId, useYn);
+    }
 }
