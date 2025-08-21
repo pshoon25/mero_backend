@@ -43,7 +43,7 @@ public class CompanyService {
         companyInfo.setLoginPw(encodedPw);
         companyInfo.setCompanyType("USER");
         companyInfo.setUseYn("Y");
-        companyInfo.setRegisterDateTime(LocalDate.now());
+        companyInfo.setRegisterDateTime(LocalDateTime.now());
         CompanyInfo result = companyRepository.save(companyInfo);
         
         // salt 정보 저장
