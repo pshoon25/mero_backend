@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "MEDIA_RESULTS")
@@ -35,7 +36,7 @@ public class MediaResults {
     private String type;
 
     @Column(name = "RECORD_DATE_TIME")
-    private LocalDate recordDateTime;
+    private LocalDateTime recordDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COMPANY_ID", referencedColumnName = "COMPANY_ID", insertable = false, updatable = false)

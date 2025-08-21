@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter 
 @Setter
@@ -16,7 +17,7 @@ public class MedaiResultsResponseDto {
     private String designId;
     private String recordGroup;
     private String type;
-    private LocalDate recordDateTime;
+    private LocalDateTime recordDateTime;
 
     public MedaiResultsResponseDto(MediaResults mediaResults) {
         this.resultId = mediaResults.getResultId();

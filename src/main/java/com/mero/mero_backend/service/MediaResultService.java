@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ public class MediaResultService {
         mediaResults.setDesignId(designManagement.getDesignId());
         mediaResults.setRecordGroup(mediaResultsRequestDto.getRecordGroup());
         mediaResults.setType(mediaResultsRequestDto.getType());
-        mediaResults.setRecordDateTime(LocalDate.now());
+        mediaResults.setRecordDateTime(LocalDateTime.now());
         return mediaResultsRepository.save(mediaResults);
     }
 
