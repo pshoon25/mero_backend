@@ -62,6 +62,7 @@ public class CompanyService {
         return companyRepository.findByCompanyId(companyId);
     }
 
+    @Transactional
     public int updateUseYnByCompanyId(String companyId, String useYn) {
         return companyRepository.updateUseYnByCompanyId(companyId, useYn);
     }
